@@ -14,6 +14,7 @@ import lk.ijse.thogakade.dto.SuperDTO;
 /**
  *
  * @author student
+ * @param <T>
  */
 public interface SuperDAO<T extends SuperDTO> {
 

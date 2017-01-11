@@ -5,59 +5,61 @@
  */
 package lk.ijse.thogakade.dto;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-
 /**
  *
  * @author Dilshan
  */
 public class OrderdetailDTO extends SuperDTO{
 
-    private Integer qty;
-    private BigDecimal unitPrice;
-    private OrderDTO orders;
-    private ItemDTO item;
-    
+    private String orderId;
+    private String itemCode;
+    private int qty;
+    private double unitPrice;
+
     public OrderdetailDTO() {
     }
+    
+    
 
-    public OrderdetailDTO(Integer qty, BigDecimal unitPrice, OrderDTO orders) {
+    public OrderdetailDTO(String orderId, String itemCode, int qty, double unitPrice) {
+        this.orderId = orderId;
+        this.itemCode = itemCode;
         this.qty = qty;
         this.unitPrice = unitPrice;
-        this.orders = orders;
+    }
+    
+    
+    public String getOrderId() {
+        return orderId;
     }
 
-    
-    public Integer getQty() {
+    public void setOrderId(String orderId) {
+        this.orderId = orderId;
+    }
+
+    public String getItemCode() {
+        return itemCode;
+    }
+
+    public void setItemCode(String itemCode) {
+        this.itemCode = itemCode;
+    }
+
+    public int getQty() {
         return qty;
     }
 
-    public void setQty(Integer qty) {
+    public void setQty(int qty) {
         this.qty = qty;
     }
 
-    public BigDecimal getUnitPrice() {
+    public double getUnitPrice() {
         return unitPrice;
     }
 
-    public void setUnitPrice(BigDecimal unitPrice) {
+    public void setUnitPrice(double unitPrice) {
         this.unitPrice = unitPrice;
     }
-
-    public OrderDTO getOrders() {
-        return orders;
-    }
-
-    public void setOrders(OrderDTO orders) {
-        this.orders = orders;
-    }
-
-    public ItemDTO getItem() {
-        return item;
-    }
-    public void setItem(ItemDTO item){
-        this.item = item;
-    }
-
+    
+    
 }

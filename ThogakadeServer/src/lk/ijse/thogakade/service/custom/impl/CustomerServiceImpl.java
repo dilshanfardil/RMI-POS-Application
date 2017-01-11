@@ -5,7 +5,6 @@
  */
 package lk.ijse.thogakade.service.custom.impl;
 
-import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import lk.ijse.thogakade.bisnuss.BOFactory;
