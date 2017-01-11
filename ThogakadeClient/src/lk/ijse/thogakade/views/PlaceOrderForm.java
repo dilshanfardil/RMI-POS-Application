@@ -5,8 +5,20 @@
  */
 package lk.ijse.thogakade.views;
 
-import lk.ijse.thogakade.views.*;
-
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+import lk.ijse.thogakade.controller.ControllerFactory;
+import lk.ijse.thogakade.controller.custom.CustomerController;
+import lk.ijse.thogakade.controller.custom.ItemController;
+import lk.ijse.thogakade.dto.CustomerDTO;
+import lk.ijse.thogakade.dto.ItemDTO;
 
 /**
  *
@@ -14,11 +26,26 @@ import lk.ijse.thogakade.views.*;
  */
 public class PlaceOrderForm extends javax.swing.JFrame {
 
+    private CustomerController ctrlCustomer;
+    private ItemController ctrlItem;
+
     /**
      * Creates new form PlaceOrderForm
      */
     public PlaceOrderForm() {
         initComponents();
+
+        try {
+            ctrlCustomer = (CustomerController) ControllerFactory.getInstance().getController(ControllerFactory.ControllerTypes.CUSTOMER);
+            ctrlItem = (ItemController) ControllerFactory.getInstance().getController(ControllerFactory.ControllerTypes.ITEM);
+        } catch (Exception ex) {
+            Logger.getLogger(PlaceOrderForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+        dateText.setText(setDate());
+        loadCustomerCombo();
+        loadItemCombo();
+
     }
 
     /**
@@ -39,26 +66,26 @@ public class PlaceOrderForm extends javax.swing.JFrame {
         jPanel2 = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
-        nameText = new javax.swing.JTextField();
+        txtCustomerName = new javax.swing.JTextField();
         custIdCombo = new javax.swing.JComboBox();
         jPanel3 = new javax.swing.JPanel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        descriptionText = new javax.swing.JTextField();
+        txtDescription = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
-        unitPriceText = new javax.swing.JTextField();
+        txtUnitPrice = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        qtyOnHandText = new javax.swing.JTextField();
-        qtyText = new javax.swing.JTextField();
+        txtQtyOnHand = new javax.swing.JTextField();
+        txtQty = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        codeCombo = new javax.swing.JComboBox();
+        itemCodeCombo = new javax.swing.JComboBox();
         jScrollPane1 = new javax.swing.JScrollPane();
         itemTable = new javax.swing.JTable();
         removeButton = new javax.swing.JButton();
         addButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         saveButton = new javax.swing.JButton();
-        amountText = new javax.swing.JTextField();
+        txtAmount = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -90,8 +117,8 @@ public class PlaceOrderForm extends javax.swing.JFrame {
         jLabel5.setFont(new java.awt.Font("DejaVu Serif", 1, 14)); // NOI18N
         jLabel5.setText("Name : ");
 
-        nameText.setEditable(false);
-        nameText.setFont(new java.awt.Font("DejaVu Serif", 1, 14)); // NOI18N
+        txtCustomerName.setEditable(false);
+        txtCustomerName.setFont(new java.awt.Font("DejaVu Serif", 1, 14)); // NOI18N
 
         custIdCombo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
@@ -111,7 +138,7 @@ public class PlaceOrderForm extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(nameText, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
+                .addComponent(txtCustomerName, javax.swing.GroupLayout.DEFAULT_SIZE, 266, Short.MAX_VALUE)
                 .addContainerGap())
         );
         jPanel2Layout.setVerticalGroup(
@@ -121,7 +148,7 @@ public class PlaceOrderForm extends javax.swing.JFrame {
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(jLabel5)
-                    .addComponent(nameText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtCustomerName, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(custIdCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
@@ -135,34 +162,39 @@ public class PlaceOrderForm extends javax.swing.JFrame {
         jLabel7.setFont(new java.awt.Font("DejaVu Serif", 1, 14)); // NOI18N
         jLabel7.setText("Description : ");
 
-        descriptionText.setEditable(false);
-        descriptionText.setFont(new java.awt.Font("DejaVu Serif", 1, 14)); // NOI18N
+        txtDescription.setEditable(false);
+        txtDescription.setFont(new java.awt.Font("DejaVu Serif", 1, 14)); // NOI18N
 
         jLabel8.setFont(new java.awt.Font("DejaVu Serif", 1, 14)); // NOI18N
         jLabel8.setText("Unit Price : ");
 
-        unitPriceText.setEditable(false);
-        unitPriceText.setFont(new java.awt.Font("DejaVu Serif", 1, 14)); // NOI18N
+        txtUnitPrice.setEditable(false);
+        txtUnitPrice.setFont(new java.awt.Font("DejaVu Serif", 1, 14)); // NOI18N
 
         jLabel9.setFont(new java.awt.Font("DejaVu Serif", 1, 14)); // NOI18N
         jLabel9.setText("Qty On Hand : ");
 
-        qtyOnHandText.setEditable(false);
-        qtyOnHandText.setFont(new java.awt.Font("DejaVu Serif", 1, 14)); // NOI18N
+        txtQtyOnHand.setEditable(false);
+        txtQtyOnHand.setFont(new java.awt.Font("DejaVu Serif", 1, 14)); // NOI18N
 
-        qtyText.setFont(new java.awt.Font("DejaVu Serif", 0, 14)); // NOI18N
-        qtyText.addActionListener(new java.awt.event.ActionListener() {
+        txtQty.setFont(new java.awt.Font("DejaVu Serif", 0, 14)); // NOI18N
+        txtQty.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                qtyTextActionPerformed(evt);
+                txtQtyActionPerformed(evt);
+            }
+        });
+        txtQty.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                txtQtyKeyPressed(evt);
             }
         });
 
         jLabel10.setFont(new java.awt.Font("DejaVu Serif", 1, 14)); // NOI18N
         jLabel10.setText("Qty : ");
 
-        codeCombo.addItemListener(new java.awt.event.ItemListener() {
+        itemCodeCombo.addItemListener(new java.awt.event.ItemListener() {
             public void itemStateChanged(java.awt.event.ItemEvent evt) {
-                codeComboItemStateChanged(evt);
+                itemCodeComboItemStateChanged(evt);
             }
         });
 
@@ -176,17 +208,17 @@ public class PlaceOrderForm extends javax.swing.JFrame {
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel8)
                         .addGap(28, 28, 28)
-                        .addComponent(unitPriceText, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(txtUnitPrice, javax.swing.GroupLayout.PREFERRED_SIZE, 197, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel6)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(codeCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(itemCodeCombo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addGap(27, 27, 27)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addComponent(jLabel7)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(descriptionText))
+                        .addComponent(txtDescription))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jLabel10)
@@ -194,10 +226,10 @@ public class PlaceOrderForm extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(qtyOnHandText, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
+                                .addComponent(txtQtyOnHand, javax.swing.GroupLayout.DEFAULT_SIZE, 202, Short.MAX_VALUE)
                                 .addGap(32, 32, 32))
                             .addGroup(jPanel3Layout.createSequentialGroup()
-                                .addComponent(qtyText, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(txtQty, javax.swing.GroupLayout.PREFERRED_SIZE, 139, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
         );
@@ -208,18 +240,18 @@ public class PlaceOrderForm extends javax.swing.JFrame {
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel6)
                     .addComponent(jLabel7)
-                    .addComponent(descriptionText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(codeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtDescription, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(itemCodeCombo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
-                    .addComponent(unitPriceText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtUnitPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9)
-                    .addComponent(qtyOnHandText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
+                    .addComponent(txtQtyOnHand, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(qtyText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(txtQty, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -274,10 +306,10 @@ public class PlaceOrderForm extends javax.swing.JFrame {
             }
         });
 
-        amountText.setEditable(false);
-        amountText.setFont(new java.awt.Font("DejaVu Serif", 1, 16)); // NOI18N
-        amountText.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
-        amountText.setText("0.0");
+        txtAmount.setEditable(false);
+        txtAmount.setFont(new java.awt.Font("DejaVu Serif", 1, 16)); // NOI18N
+        txtAmount.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        txtAmount.setText("0.0");
 
         jLabel11.setFont(new java.awt.Font("DejaVu Serif", 1, 14)); // NOI18N
         jLabel11.setText("Total Amount : ");
@@ -313,7 +345,7 @@ public class PlaceOrderForm extends javax.swing.JFrame {
                                 .addComponent(jLabel11)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(amountText, javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(txtAmount, javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(jPanel1Layout.createSequentialGroup()
                                         .addComponent(saveButton)
                                         .addGap(18, 18, 18)
@@ -343,7 +375,7 @@ public class PlaceOrderForm extends javax.swing.JFrame {
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 171, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(amountText, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtAmount, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -368,11 +400,48 @@ public class PlaceOrderForm extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void qtyTextActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_qtyTextActionPerformed
+    private void txtQtyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtQtyActionPerformed
 
-    }//GEN-LAST:event_qtyTextActionPerformed
+    }//GEN-LAST:event_txtQtyActionPerformed
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+        
+        //Add to the Table
+        if (itemCodeCombo.getSelectedIndex() != -1) {
+
+            int qtyOnHand = Integer.parseInt(txtQtyOnHand.getText());
+            if (txtQty.getText().trim().isEmpty()) {
+                return;
+            }
+            int qty = Integer.parseInt(txtQty.getText());
+
+            DefaultTableModel dtm = (DefaultTableModel) itemTable.getModel();
+
+            for (int i = 0; i < dtm.getRowCount(); i++) {
+                if (dtm.getValueAt(i, 0).toString().equals(itemCodeCombo.getSelectedItem().toString())) {
+                    JOptionPane.showMessageDialog(this, "Sorry, Item has already been added.");
+                    return;
+                }
+            }
+
+            if (qty <= qtyOnHand && qty > 0) {
+
+                double amount = qty * Double.parseDouble(txtUnitPrice.getText());
+
+                Object[] rowData = {
+                    itemCodeCombo.getSelectedItem().toString(),
+                    txtDescription.getText(),
+                    txtUnitPrice.getText(),
+                    txtQty.getText(),
+                    String.valueOf(amount)
+                };
+                dtm.addRow(rowData);
+            }
+        }
+        
+        //Total
+        calculateTotalAmount();
+
     }//GEN-LAST:event_addButtonActionPerformed
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
@@ -386,17 +455,43 @@ public class PlaceOrderForm extends javax.swing.JFrame {
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void custIdComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_custIdComboItemStateChanged
+        if (custIdCombo.getSelectedIndex() != -1) {
+            CustomerDTO customer;
+            try {
+                customer = ctrlCustomer.getbyId(custIdCombo.getSelectedItem().toString());
+                txtCustomerName.setText(customer.getName());
+            } catch (Exception ex) {
+                Logger.getLogger(PlaceOrderForm.class.getName()).log(Level.SEVERE, null, ex);
+            }
+
+        }
+
     }//GEN-LAST:event_custIdComboItemStateChanged
 
-    private void codeComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_codeComboItemStateChanged
-    }//GEN-LAST:event_codeComboItemStateChanged
+    private void itemCodeComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_itemCodeComboItemStateChanged
+
+        if (itemCodeCombo.getSelectedIndex() != -1) {
+            try {
+                ItemDTO item = ctrlItem.getbyId(itemCodeCombo.getSelectedItem().toString());
+                txtDescription.setText(item.getDescription());
+                txtQtyOnHand.setText(item.getQtyOnHand() + "");
+                txtUnitPrice.setText(formattedPrice(String.valueOf(item.getUnitPrice())));
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, "Something Went Wrong");
+            }
+        }
+    }//GEN-LAST:event_itemCodeComboItemStateChanged
+
+    private void txtQtyKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtQtyKeyPressed
+        if (Character.isDigit(evt.getKeyChar())) {
+            evt.consume();
+        }
+    }//GEN-LAST:event_txtQtyKeyPressed
 
     /**
      * @param args the command line arguments
      */
     public static void main(String args[]) {
-
-       
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -408,12 +503,10 @@ public class PlaceOrderForm extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton addButton;
-    private javax.swing.JTextField amountText;
     private javax.swing.JButton cancelButton;
-    private javax.swing.JComboBox codeCombo;
     private javax.swing.JComboBox custIdCombo;
     private javax.swing.JTextField dateText;
-    private javax.swing.JTextField descriptionText;
+    private javax.swing.JComboBox itemCodeCombo;
     private javax.swing.JTable itemTable;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -430,13 +523,76 @@ public class PlaceOrderForm extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTextField nameText;
     private javax.swing.JTextField orderIdText;
-    private javax.swing.JTextField qtyOnHandText;
-    private javax.swing.JTextField qtyText;
     private javax.swing.JButton removeButton;
     private javax.swing.JButton saveButton;
-    private javax.swing.JTextField unitPriceText;
+    private javax.swing.JTextField txtAmount;
+    private javax.swing.JTextField txtCustomerName;
+    private javax.swing.JTextField txtDescription;
+    private javax.swing.JTextField txtQty;
+    private javax.swing.JTextField txtQtyOnHand;
+    private javax.swing.JTextField txtUnitPrice;
     // End of variables declaration//GEN-END:variables
+
+    private String setDate() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        return sdf.format(new Date());
+    }
+
+    private void loadCustomerCombo() {
+        // Loading customers in to the customer combo
+        ArrayList<CustomerDTO> allCustomers;
+        try {
+            allCustomers = ctrlCustomer.get();
+            for (CustomerDTO customer : allCustomers) {
+                custIdCombo.addItem(customer.getId());
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(PlaceOrderForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }
+
+    private void loadItemCombo() {
+        ArrayList<ItemDTO> allItems;
+        try {
+            allItems = ctrlItem.get();
+            for (ItemDTO item : allItems) {
+                itemCodeCombo.addItem(item.getCode());
+            }
+        } catch (Exception ex) {
+            Logger.getLogger(PlaceOrderForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private String formattedPrice(String price) {
+        NumberFormat nf = NumberFormat.getInstance();
+        nf.setGroupingUsed(false);
+        nf.setMaximumFractionDigits(2);
+        nf.setMinimumFractionDigits(2);
+        return nf.format(Double.parseDouble(price));
+    }
+    
+    private void calculateTotalAmount() {
+        DefaultTableModel dtm = (DefaultTableModel) itemTable.getModel();
+
+        double total = 0;
+
+        for (int i = 0; i < dtm.getRowCount(); i++) {
+            total += Double.parseDouble((String) dtm.getValueAt(i, 4));
+        }
+        txtAmount.setText(formattedPrice(String.valueOf(total)));
+
+    }
+
+    private Date parseDate(String date) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        try {
+            return sdf.parse(date);
+        } catch (ParseException ex) {
+            Logger.getLogger(PlaceOrderForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return null;
+    }
 
 }
