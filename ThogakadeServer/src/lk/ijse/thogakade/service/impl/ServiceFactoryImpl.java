@@ -40,6 +40,7 @@ public class ServiceFactoryImpl extends UnicastRemoteObject implements ServiceFa
                 return new OrderServiceImpl();
             case ITEM:
                 return new ItemServiceImpl();
+            
             default:
                 return null;
         }

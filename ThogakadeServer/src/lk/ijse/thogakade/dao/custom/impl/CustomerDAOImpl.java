@@ -58,7 +58,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     @Override
     public CustomerDTO get(String id) throws Exception {
-        System.out.println("Welcomto DAO Layer");
+        
         CustomerDTO customer = null;
         String sql = "SELECT * FROM Customer WHERE id = '" + id + "' ";
         Statement stm = connection.createStatement();

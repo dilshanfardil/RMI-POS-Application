@@ -16,7 +16,7 @@ import lk.ijse.thogakade.bisnuss.custom.impl.OrderBOImpl;
 public class BOFactory {
 
     public enum BOType {
-        CUSTOMER, ORDER, ITEM,TEST,TEST1
+        CUSTOMER, ORDER, ITEM,
     }
     private static BOFactory bOFactory;
 
