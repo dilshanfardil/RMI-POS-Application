@@ -18,6 +18,7 @@ public class ControllerFactory {
 
     public enum ControllerTypes {
         CUSTOMER, PLACE_ORDER, ITEM, ;
+        CUSTOMER, PLACE_ORDER, ITEM;
     }
 
     private static ControllerFactory controllerFactory;

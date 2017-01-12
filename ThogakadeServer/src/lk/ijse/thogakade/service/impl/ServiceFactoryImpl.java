@@ -8,7 +8,7 @@ package lk.ijse.thogakade.service.impl;
 import java.rmi.server.UnicastRemoteObject;
 import lk.ijse.thogakade.service.ServiceFactory;
 import lk.ijse.thogakade.service.SuperService;
-import lk.ijse.thogakade.service.custom.impl.CustomerServiceImpl;
+
 import lk.ijse.thogakade.service.custom.impl.ItemServiceImpl;
 import lk.ijse.thogakade.service.custom.impl.OrderServiceImpl;
 
