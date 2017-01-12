@@ -5,15 +5,14 @@
  */
 package lk.ijse.thogakade.dao;
 
-import java.lang.reflect.Field;
 import java.sql.Connection;
-import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import lk.ijse.thogakade.dto.SuperDTO;
 
 /**
  *
  * @author student
+ * @param <T>
  */
 public interface SuperDAO<T extends SuperDTO> {
 

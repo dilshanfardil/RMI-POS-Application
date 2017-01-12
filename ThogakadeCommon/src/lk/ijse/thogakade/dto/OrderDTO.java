@@ -16,6 +16,22 @@ public class OrderDTO extends SuperDTO{
     private Date orderDate;
     private String custId;
 
+    
+    
+    public OrderDTO() {
+    }
+
+    public OrderDTO(String orderId, Date orderDate, String custId) {
+        this.orderId = orderId;
+        this.orderDate = orderDate;
+        this.custId = custId;
+    }
+
+    
+    
+    
+    
+    
     /**
      * @return the orderId
      */
