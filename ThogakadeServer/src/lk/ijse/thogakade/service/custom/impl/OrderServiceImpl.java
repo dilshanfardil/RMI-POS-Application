@@ -5,51 +5,43 @@
  */
 package lk.ijse.thogakade.service.custom.impl;
 
-
 import java.util.ArrayList;
-import lk.ijse.thogakade.bisnuss.BOFactory;
-import lk.ijse.thogakade.bisnuss.custom.OrderBO;
 import lk.ijse.thogakade.dto.OrderDTO;
 import lk.ijse.thogakade.service.custom.OrderService;
 
 /**
  *
- * @author Pramod Dilshan
+ * @author Dilshan
  */
-public class OrderServiceImpl implements OrderService{
-    
-    private OrderBO orderBO;
+public class OrderServiceImpl implements OrderService {
 
-    public OrderServiceImpl() throws Exception {
-        try {
-            orderBO = (OrderBO) BOFactory.getInstance().getBOTypes(BOFactory.BOType.ORDER);
-        } catch (Exception ex) {
-
-        }
+    public  OrderServiceImpl() throws Exception{
+        
     }
 
     @Override
     public boolean save(OrderDTO t) throws Exception {
-        return orderBO.save(t);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean update(OrderDTO t) throws Exception {
-        return orderBO.update(t);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public boolean delete(String id) throws Exception {
-        return orderBO.delete(id);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public OrderDTO getbyId(String id) throws Exception {
-        return orderBO.getbyId(id);
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public ArrayList<OrderDTO> get() throws Exception {
-        return orderBO.get();
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+    
 }
