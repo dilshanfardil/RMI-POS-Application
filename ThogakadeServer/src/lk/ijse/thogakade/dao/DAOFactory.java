@@ -8,6 +8,7 @@ package lk.ijse.thogakade.dao;
 import lk.ijse.thogakade.dao.custom.impl.CustomerDAOImpl;
 import lk.ijse.thogakade.dao.custom.impl.ItemDAOImpl;
 import lk.ijse.thogakade.dao.custom.impl.OrderDAOImpl;
+import lk.ijse.thogakade.dao.custom.impl.OrderDetailsDAOImpl;
 
 /**
  *
@@ -40,6 +41,8 @@ public class DAOFactory {
                 return new ItemDAOImpl();
             case ORDER:
                 return new OrderDAOImpl();
+            case ORDER_DETAILS:
+                return new OrderDetailsDAOImpl();
             default:
                 return null;
         }

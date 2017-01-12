@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import lk.ijse.thogakade.bisnuss.custom.OrderBO;
 import lk.ijse.thogakade.dao.ConnectionFactory;
 import lk.ijse.thogakade.dao.DAOFactory;
+import lk.ijse.thogakade.dao.custom.ItemDAO;
 import lk.ijse.thogakade.dao.custom.OrderDAO;
 import lk.ijse.thogakade.dao.custom.OrderDetailsDAO;
 import lk.ijse.thogakade.dto.OrderDTO;
@@ -23,10 +24,12 @@ public class OrderBOImpl implements OrderBO {
 
     OrderDetailsDAO orderdetailDAO;
     OrderDAO orderDAO;
+    ItemDAO itemDAO;
 
     public OrderBOImpl() {
         orderdetailDAO = (OrderDetailsDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ORDER_DETAILS);
         orderDAO = (OrderDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ORDER);
+        itemDAO = (ItemDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ITEM);
     }
 
     @Override
