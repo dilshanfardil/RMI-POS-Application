@@ -452,6 +452,8 @@ public class PlaceOrderForm extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+
+
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void custIdComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_custIdComboItemStateChanged

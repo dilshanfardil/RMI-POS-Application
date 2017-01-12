@@ -5,8 +5,6 @@
  */
 package lk.ijse.thogakade.service.custom.impl;
 
-import java.rmi.RemoteException;
-import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import lk.ijse.thogakade.dto.OrderDTO;
 import lk.ijse.thogakade.service.custom.OrderService;
@@ -15,7 +13,7 @@ import lk.ijse.thogakade.service.custom.OrderService;
  *
  * @author Dilshan
  */
-public class OrderServiceImpl extends UnicastRemoteObject implements OrderService {
+public class OrderServiceImpl implements OrderService {
 
     public  OrderServiceImpl() throws Exception{
         
