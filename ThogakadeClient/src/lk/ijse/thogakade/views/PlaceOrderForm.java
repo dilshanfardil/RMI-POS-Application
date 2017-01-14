@@ -17,6 +17,7 @@ import javax.swing.table.DefaultTableModel;
 import lk.ijse.thogakade.controller.ControllerFactory;
 import lk.ijse.thogakade.controller.custom.CustomerController;
 import lk.ijse.thogakade.controller.custom.ItemController;
+import lk.ijse.thogakade.controller.custom.PlaceOrderController;
 import lk.ijse.thogakade.dto.CustomerDTO;
 import lk.ijse.thogakade.dto.ItemDTO;
 
@@ -28,6 +29,7 @@ public class PlaceOrderForm extends javax.swing.JFrame {
 
     private CustomerController ctrlCustomer;
     private ItemController ctrlItem;
+    private PlaceOrderController ctrlOrder;
 
     /**
      * Creates new form PlaceOrderForm
@@ -38,6 +40,7 @@ public class PlaceOrderForm extends javax.swing.JFrame {
         try {
             ctrlCustomer = (CustomerController) ControllerFactory.getInstance().getController(ControllerFactory.ControllerTypes.CUSTOMER);
             ctrlItem = (ItemController) ControllerFactory.getInstance().getController(ControllerFactory.ControllerTypes.ITEM);
+            ctrlOrder = (PlaceOrderController) ControllerFactory.getInstance().getController(ControllerFactory.ControllerTypes.PLACE_ORDER);
         } catch (Exception ex) {
             Logger.getLogger(PlaceOrderForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -453,10 +456,22 @@ public class PlaceOrderForm extends javax.swing.JFrame {
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
 
-
+        
+        try {
+            ItemDTO itemDTO = new ItemDTO(orderIdText.getText(), 
+                    txtDescription.getText(), 
+                    Double.parseDouble(txtUnitPrice.getText()), 
+                    Integer.parseInt(txtQty.getText()));
+            ctrlItem.update(itemDTO);
+            
+        } catch (Exception ex) {
+            Logger.getLogger(PlaceOrderForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void custIdComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_custIdComboItemStateChanged
+      
         if (custIdCombo.getSelectedIndex() != -1) {
             CustomerDTO customer;
             try {

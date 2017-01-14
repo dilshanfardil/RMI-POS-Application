@@ -5,7 +5,9 @@
  */
 package lk.ijse.thogakade.dao;
 
+import java.lang.reflect.Field;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import lk.ijse.thogakade.dto.SuperDTO;
 
@@ -15,7 +17,9 @@ import lk.ijse.thogakade.dto.SuperDTO;
  * @param <T>
  */
 public interface SuperDAO<T extends SuperDTO> {
-
+        
+    //<editor-fold desc="Using Reflective APIs">
+    
     public enum Tables {
 
         CUSTOMER("customer"), ITEM("item"), ORDER("order"), ORDER_DETAILS("orderdetails");
@@ -31,33 +35,74 @@ public interface SuperDAO<T extends SuperDTO> {
         }
     }
 
+    public default boolean save(Tables table, T t) throws Exception {
+        Connection connection = ConnectionFactory.getInstance().getConnection();
+        Class<? extends SuperDTO> dtoClass = t.getClass();
+        Field[] declaredFields = dtoClass.getDeclaredFields();
+
+
+        String sqlStm = "";
+        for (int i = 0; i < declaredFields.length; i++) {
+            if (i != declaredFields.length - 1) {
+                sqlStm += "?,";
+            } else {
+                sqlStm += "?";
+            }
+        }
+        
+        String sqlStm_temp = "INSERT INTO " + table + " VALUES(" + sqlStm + ")";
+        PreparedStatement pst = connection.prepareStatement(sqlStm);
+        int i = 1;
+        
+        for (Field declaredField : declaredFields) {
+            declaredField.setAccessible(true);
+            Object value = declaredField.get(t);
+            pst.setObject(i, value);
+            i++;
+        }
+
+        pst.executeUpdate();
+
+        return true;
+    }
+        // Update
+        public default boolean update(Tables table, T t) throws Exception {
+        Connection connection = ConnectionFactory.getInstance().getConnection();
+        Class<? extends SuperDTO> dtoClass = t.getClass();
+        Field[] declaredFields = dtoClass.getDeclaredFields();
+
+
+        String sqlStm = "";
+        for (int i = 0; i < declaredFields.length; i++) {
+            if (i != declaredFields.length - 1) {
+                sqlStm += "?,";
+            } else {
+                sqlStm += "?";
+            }
+        }
+        
+        String sqlStm_temp = "INSERT INTO " + table + " VALUES(" + sqlStm + ")";
+        PreparedStatement pst = connection.prepareStatement(sqlStm);
+        int i = 1;
+        
+        for (Field declaredField : declaredFields) {
+            declaredField.setAccessible(true);
+            Object value = declaredField.get(t);
+            pst.setObject(i, value);
+            i++;
+        }
+
+        pst.executeUpdate();
+
+        return true;
+    }
+    
+    
+    
+    //</editor-fold>
+    
     public void setConnection(Connection connection) throws Exception;
 
-//    public default boolean save(Tables table, T t) throws Exception{
-//        
-//        Connection connection = ConnectionFactory.getInstance().getConnection();
-//        
-//        Class<? extends SuperDTO> dtoClass = t.getClass();
-//        
-//        Field[] declaredFields = dtoClass.getDeclaredFields();
-//        
-//        String sqlStm = "";
-//        
-//        PreparedStatement pst = connection.prepareStatement(sqlStm);        
-//        
-//        int i = 1;
-//        
-//        for (Field declaredField : declaredFields) {
-//            declaredField.setAccessible(true);
-//            Object value = declaredField.get(t);
-//            pst.setObject(i, value);
-//            i++;
-//        }
-//        
-//        pst.executeUpdate();
-//        
-//        return true;
-//    }
     public boolean save(T dto) throws Exception;
 
     public boolean update(T dto) throws Exception;
