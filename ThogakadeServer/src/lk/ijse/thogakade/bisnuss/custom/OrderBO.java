@@ -17,5 +17,6 @@ import lk.ijse.thogakade.dto.OrderdetailDTO;
 public interface OrderBO extends SuperBO<OrderDTO>{
 
     public boolean saveOrder(OrderDTO Odto, ArrayList<OrderdetailDTO> t) throws Exception;
+    
 
 }
