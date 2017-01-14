@@ -20,6 +20,7 @@ import lk.ijse.thogakade.controller.custom.ItemController;
 import lk.ijse.thogakade.controller.custom.PlaceOrderController;
 import lk.ijse.thogakade.dto.CustomerDTO;
 import lk.ijse.thogakade.dto.ItemDTO;
+import lk.ijse.thogakade.dto.OrderDTO;
 
 /**
  *
@@ -462,6 +463,8 @@ public class PlaceOrderForm extends javax.swing.JFrame {
                     txtDescription.getText(), 
                     Double.parseDouble(txtUnitPrice.getText()), 
                     Integer.parseInt(txtQty.getText()));
+            
+            OrderDTO orderDTO = new OrderDTO();
             ctrlItem.update(itemDTO);
             
         } catch (Exception ex) {
