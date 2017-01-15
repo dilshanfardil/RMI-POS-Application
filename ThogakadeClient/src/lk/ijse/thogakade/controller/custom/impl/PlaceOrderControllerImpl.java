@@ -26,27 +26,27 @@ public class PlaceOrderControllerImpl implements PlaceOrderController {
 
     @Override
     public boolean save(OrderDTO t) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return orderService.save(t);
     }
 
     @Override
     public boolean update(OrderDTO t) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return orderService.update(t);
     }
 
     @Override
     public boolean delete(String id) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return orderService.delete(id);
     }
 
     @Override
     public OrderDTO getbyId(String id) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return orderService.getbyId(id);
     }
 
     @Override
     public ArrayList<OrderDTO> get() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return orderService.get();
     }
 
 }
