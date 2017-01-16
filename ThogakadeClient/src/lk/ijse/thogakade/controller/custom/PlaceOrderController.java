@@ -5,17 +5,13 @@
  */
 package lk.ijse.thogakade.controller.custom;
 
-import java.util.ArrayList;
 import lk.ijse.thogakade.controller.SuperController;
 import lk.ijse.thogakade.dto.OrderDTO;
-import lk.ijse.thogakade.dto.OrderdetailDTO;
 
 /**
  *
  * @author student
  */
 public interface PlaceOrderController extends SuperController<OrderDTO>{
-    
-    public boolean saveOrder(OrderDTO orderDTO, ArrayList<OrderdetailDTO> orderDetailAry)throws Exception ;
     
 }

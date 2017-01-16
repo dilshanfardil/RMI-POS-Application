@@ -5,28 +5,19 @@
  */
 package lk.ijse.thogakade.service.custom.impl;
 
-
-import java.rmi.server.UnicastRemoteObject;
-
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
-
 import java.util.ArrayList;
 import lk.ijse.thogakade.bisnuss.BOFactory;
 import lk.ijse.thogakade.bisnuss.custom.OrderBO;
 import lk.ijse.thogakade.dto.OrderDTO;
-
-import lk.ijse.thogakade.dto.OrderdetailDTO;
-
 import lk.ijse.thogakade.observers.Observer;
-
 import lk.ijse.thogakade.service.custom.OrderService;
 
 /**
  *
  * @author Dilshan
  */
-
 public class OrderServiceImpl extends UnicastRemoteObject implements OrderService {
 
     private OrderBO orderBO;
@@ -34,7 +25,6 @@ public class OrderServiceImpl extends UnicastRemoteObject implements OrderServic
 
     public OrderServiceImpl() throws Exception {
         orderBO = (OrderBO) BOFactory.getInstance().getBOTypes(BOFactory.BOType.ORDER);
-
     }
 
     @Override
@@ -70,13 +60,6 @@ public class OrderServiceImpl extends UnicastRemoteObject implements OrderServic
     public void registerObserver(Observer observer) throws RemoteException {
         alObservers.add(observer);
     }
-
-
-    @Override
-    public boolean saveOrder(OrderDTO orderDTO, ArrayList<OrderdetailDTO> orderDetailAry) throws Exception{
-        return orderBO.saveOrder(orderDTO, orderDetailAry);
-    }
-
 
     @Override
     public void unregisterObserver(Observer observer) throws RemoteException {
