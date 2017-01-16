@@ -54,4 +54,18 @@ public class CustomerControllerImpl implements CustomerController {
         return customerService.get();
     }
 
+    @Override
+    public boolean reserve(String id) throws Exception {
+        return customerService.reserve(id,customerService);
+    }
+
+    @Override
+    public boolean release(String id) throws Exception {
+        return customerService.release(id);
+    }
+
+    
+
+    
+
 }

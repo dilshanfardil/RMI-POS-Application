@@ -20,11 +20,14 @@ import javax.swing.table.DefaultTableModel;
 import lk.ijse.thogakade.controller.ControllerFactory;
 import lk.ijse.thogakade.controller.custom.CustomerController;
 import lk.ijse.thogakade.controller.custom.ItemController;
+
+
 import lk.ijse.thogakade.controller.custom.PlaceOrderController;
 import lk.ijse.thogakade.dto.CustomerDTO;
 import lk.ijse.thogakade.dto.ItemDTO;
 import lk.ijse.thogakade.dto.OrderDTO;
 import lk.ijse.thogakade.dto.OrderdetailDTO;
+
 
 /**
  *
@@ -36,6 +39,7 @@ public class PlaceOrderForm extends javax.swing.JFrame implements Observer{
     private ItemController ctrlItem;
     private PlaceOrderController ctrlOrder;
 
+
     /**
      * Creates new form PlaceOrderForm
      */
@@ -45,7 +49,9 @@ public class PlaceOrderForm extends javax.swing.JFrame implements Observer{
         try {
             ctrlCustomer = (CustomerController) ControllerFactory.getInstance().getController(ControllerFactory.ControllerTypes.CUSTOMER);
             ctrlItem = (ItemController) ControllerFactory.getInstance().getController(ControllerFactory.ControllerTypes.ITEM);
+
             ctrlOrder = (PlaceOrderController) ControllerFactory.getInstance().getController(ControllerFactory.ControllerTypes.PLACE_ORDER);
+
         } catch (Exception ex) {
             Logger.getLogger(PlaceOrderForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -415,6 +421,42 @@ public class PlaceOrderForm extends javax.swing.JFrame implements Observer{
 
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
 
+        
+        //Add to the Table
+        if (itemCodeCombo.getSelectedIndex() != -1) {
+
+            int qtyOnHand = Integer.parseInt(txtQtyOnHand.getText());
+            if (txtQty.getText().trim().isEmpty()) {
+                return;
+            }
+            int qty = Integer.parseInt(txtQty.getText());
+
+            DefaultTableModel dtm = (DefaultTableModel) itemTable.getModel();
+
+            for (int i = 0; i < dtm.getRowCount(); i++) {
+                if (dtm.getValueAt(i, 0).toString().equals(itemCodeCombo.getSelectedItem().toString())) {
+                    JOptionPane.showMessageDialog(this, "Sorry, Item has already been added.");
+                    return;
+                }
+            }
+
+            if (qty <= qtyOnHand && qty > 0) {
+
+                double amount = qty * Double.parseDouble(txtUnitPrice.getText());
+
+                Object[] rowData = {
+                    itemCodeCombo.getSelectedItem().toString(),
+                    txtDescription.getText(),
+                    txtUnitPrice.getText(),
+                    txtQty.getText(),
+                    String.valueOf(amount)
+                };
+                dtm.addRow(rowData);
+            }
+        }
+        
+
+
         //Add to the Table
         if (itemCodeCombo.getSelectedIndex() != -1) {
 
@@ -448,6 +490,7 @@ public class PlaceOrderForm extends javax.swing.JFrame implements Observer{
             }
         }
 
+
         //Total
         calculateTotalAmount();
 
@@ -461,6 +504,7 @@ public class PlaceOrderForm extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void saveButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_saveButtonActionPerformed
+
 
         try {
 
@@ -496,9 +540,12 @@ public class PlaceOrderForm extends javax.swing.JFrame implements Observer{
             Logger.getLogger(PlaceOrderForm.class.getName()).log(Level.SEVERE, null, ex);
         }
 
+
     }//GEN-LAST:event_saveButtonActionPerformed
 
     private void custIdComboItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_custIdComboItemStateChanged
+
+
 
         if (custIdCombo.getSelectedIndex() != -1) {
             CustomerDTO customer;

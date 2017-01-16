@@ -49,4 +49,14 @@ public class ItemControlerImpl implements ItemController {
         return itemService.get();
     }
 
+    @Override
+    public boolean reserve(String id) throws Exception {
+        return itemService.reserve(id,itemService);
+    }
+
+    @Override
+    public boolean release(String id) throws Exception {
+        return itemService.release(id);
+    }
+
 }

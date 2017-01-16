@@ -354,6 +354,7 @@ public class CustomerForm extends javax.swing.JFrame {
         try {
             boolean result = ctrlCustomer.update(customer);
             if (result) {
+                ctrlCustomer.release(txtID.getText());
                 loadTable();
                 clearAll();
                 JOptionPane.showMessageDialog(this, "Customer has been Updated added");
@@ -374,10 +375,14 @@ public class CustomerForm extends javax.swing.JFrame {
         if (evt.getClickCount() == 2) {
             try {                
                 CustomerDTO resDTO = ctrlCustomer.getbyId(tblCustomer.getValueAt(tblCustomer.getSelectedRow(), 0).toString());
-                txtID.setText(resDTO.getId());
-                txtName.setText(resDTO.getName());
-                txtAddress.setText(resDTO.getAddress());
-                txtSalary.setText(resDTO.getSalary() + "");
+                if(ctrlCustomer.reserve(resDTO.getId())){
+                    txtID.setText(resDTO.getId());
+                    txtName.setText(resDTO.getName());
+                    txtAddress.setText(resDTO.getAddress());
+                    txtSalary.setText(resDTO.getSalary() + "");
+                }else{
+                    JOptionPane.showMessageDialog(this, "Please wait..");
+                }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -389,6 +394,7 @@ public class CustomerForm extends javax.swing.JFrame {
         try {
             boolean result = ctrlCustomer.delete(txtID.getText());
             if (result) {
+                ctrlCustomer.release(txtID.getText());
                 loadTable();
                 clearAll();
                 JOptionPane.showMessageDialog(this, "Customer has been Deleted");

@@ -20,6 +20,8 @@ import lk.ijse.thogakade.service.custom.CustomerService;
 public class CustomerServiceImpl extends UnicastRemoteObject implements CustomerService {
 
     private CustomerBO customerBO;
+  
+  private static Reservation customerReservation = new Reservation();
 
     private static ArrayList<Observer> alObservers = new ArrayList<>();
 
@@ -77,6 +79,17 @@ public class CustomerServiceImpl extends UnicastRemoteObject implements Customer
         for (Observer alObserver : alObservers) {
             alObserver.update();
         }
+    }
+  
+  
+    @Override
+    public boolean reserve(String id, SuperService superService) throws Exception {
+        return customerReservation.reserve(id, superService);
+    }
+
+    @Override
+    public boolean release(String id) throws Exception {
+        return customerReservation.release(id);
     }
 
 }

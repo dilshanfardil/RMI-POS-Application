@@ -24,4 +24,10 @@ public interface SuperService<T> extends Remote,Subject {
     public T getbyId(String id) throws Exception;
 
     public ArrayList<T> get() throws Exception;
+    
+    public boolean reserve(String id,SuperService superService) throws Exception;
+    
+    public boolean release(String id) throws Exception;
+
 }
+

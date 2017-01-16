@@ -21,14 +21,13 @@ import lk.ijse.thogakade.service.custom.ItemService;
 public class ItemServiceImpl extends UnicastRemoteObject implements ItemService {
 
     private ItemBO itemBO;
+
     private static ArrayList<Observer> alObservers = new ArrayList<>();
 
     public ItemServiceImpl() throws Exception {
         try {
             itemBO = (ItemBO) BOFactory.getInstance().getBOTypes(BOFactory.BOType.ITEM);
-        } catch (Exception ex) {
-            System.out.println("a  " + ex);
-        }
+        
     }
 
     @Override

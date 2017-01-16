@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import lk.ijse.thogakade.controller.ServerConnectorFactory;
 import lk.ijse.thogakade.controller.custom.PlaceOrderController;
 import lk.ijse.thogakade.dto.OrderDTO;
+import lk.ijse.thogakade.dto.OrderdetailDTO;
 import lk.ijse.thogakade.service.ServiceFactory;
 import lk.ijse.thogakade.service.custom.OrderService;
 
@@ -22,6 +23,12 @@ public class PlaceOrderControllerImpl implements PlaceOrderController {
 
     public PlaceOrderControllerImpl() throws Exception{
         orderService = (OrderService) ServerConnectorFactory.getInstance().getService(ServiceFactory.ServiceTypes.ORDER);
+    }
+    
+    @Override
+    public boolean saveOrder(OrderDTO orderDTO, ArrayList<OrderdetailDTO> orderDetailAry)throws Exception {
+        return orderService.saveOrder(orderDTO,orderDetailAry);
+    
     }
 
     @Override
@@ -46,7 +53,7 @@ public class PlaceOrderControllerImpl implements PlaceOrderController {
 
     @Override
     public ArrayList<OrderDTO> get() throws Exception {
-        return orderService.get();
+                return orderService.get();
     }
 
 }

@@ -56,7 +56,7 @@ public class ItemBOImpl implements ItemBO {
     public ItemDTO getbyId(String id) throws Exception {
         Connection connection = ConnectionFactory.getInstance().getConnection();
         itemDAO.setConnection(connection);
-        ItemDTO itemDTO = itemDAO.get(id);
+        ItemDTO itemDTO = itemDAO.getById(id);
         connection.close();
         return itemDTO;
     }

@@ -20,6 +20,22 @@ import lk.ijse.thogakade.dto.SuperDTO;
  */
 public interface SuperDAO<T extends SuperDTO> {
 
+
+//    public enum Tables {
+//
+//        CUSTOMER("customer"), ITEM("item"), ORDER("order"), ORDER_DETAILS("orderdetails");
+//
+//        private String tblName;
+//
+//        private Tables(String tableName) {
+//            tblName = tableName;
+//        }
+//
+//        public String getTableName() {
+//            return tblName;
+//        }
+//    }
+
     public default boolean save(SuperDTO dto) throws Exception {
         //<editor-fold desc="Using Reflective APIs - Save">
         Class<? extends SuperDAO> aClass = this.getClass();
@@ -192,6 +208,7 @@ public interface SuperDAO<T extends SuperDTO> {
         return (ArrayList<T>) allDtos;
         //</editor-fold>
     }
+
 
     public void setConnection(Connection connection) throws Exception;
 
