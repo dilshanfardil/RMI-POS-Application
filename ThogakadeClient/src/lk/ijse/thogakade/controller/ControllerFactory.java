@@ -18,7 +18,7 @@ public class ControllerFactory {
 
     public enum ControllerTypes {
 
-         ;
+        CUSTOMER, PLACE_ORDER, ITEM,DLMSNV ;
         
     }
 
