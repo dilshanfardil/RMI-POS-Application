@@ -38,7 +38,7 @@ public class CustomerForm extends javax.swing.JFrame {
         } catch (MalformedURLException ex) {
             System.out.println("xx");
         } catch (RemoteException ex) {
-            System.out.println("xxxxx");
+            System.out.println("");
         } catch (Exception ex) {
             Logger.getLogger(CustomerForm.class.getName()).log(Level.SEVERE, null, ex);
         }
