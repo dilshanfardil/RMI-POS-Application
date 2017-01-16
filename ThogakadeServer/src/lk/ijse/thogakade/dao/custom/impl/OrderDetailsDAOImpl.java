@@ -55,50 +55,50 @@ public class OrderDetailsDAOImpl implements OrderDetailsDAO{
 //
 //    }
 
-    @Override
-    public boolean delete(String id) throws Exception {
-        PreparedStatement pst = connection.prepareStatement("Delete From Orderdetail where OrderId='" + id + "'");
-        int result = pst.executeUpdate();
-        return (result > 0);
-    }
-
-    @Override
-    public OrderdetailDTO get(String id) throws Exception {
-       
-        OrderdetailDTO orderdetail = null;
-        String sql = "SELECT * FROM Orderdetail WHERE OrderId = '" + id + "' ";
-        Statement stm = connection.createStatement();
-        ResultSet rset = stm.executeQuery(sql);
-        if (rset.next()) {
-            orderdetail = new OrderdetailDTO(
-                    rset.getString(1),
-                    rset.getString(2),
-                    rset.getInt(3),
-                    rset.getDouble(4));
-        }
-        return orderdetail;
-    }
-
-    @Override
-    public ArrayList<OrderdetailDTO> getAll() throws Exception {
-        ArrayList<OrderdetailDTO> alOrderdetails = new ArrayList<>();
-        String sql = "select * from Orderdetail";
-        Statement stm = connection.createStatement();
-        ResultSet rset = stm.executeQuery(sql);
-
-        while (rset.next()) {
-            String OrderId = rset.getString("OrderId");
-            String ItemCode = rset.getString("ItemCode");
-            int Qty = rset.getInt("Qty");
-            double unitPrice = rset.getDouble("unitPrice");
-
-            OrderdetailDTO orderdetail = new OrderdetailDTO(OrderId, ItemCode, Qty, unitPrice);
-            alOrderdetails.add(orderdetail);
-        }
-
-        return alOrderdetails;
-
-    }
+//    @Override
+//    public boolean delete(String id) throws Exception {
+//        PreparedStatement pst = connection.prepareStatement("Delete From Orderdetail where OrderId='" + id + "'");
+//        int result = pst.executeUpdate();
+//        return (result > 0);
+//    }
+//
+//    @Override
+//    public OrderdetailDTO get(String id) throws Exception {
+//       
+//        OrderdetailDTO orderdetail = null;
+//        String sql = "SELECT * FROM Orderdetail WHERE OrderId = '" + id + "' ";
+//        Statement stm = connection.createStatement();
+//        ResultSet rset = stm.executeQuery(sql);
+//        if (rset.next()) {
+//            orderdetail = new OrderdetailDTO(
+//                    rset.getString(1),
+//                    rset.getString(2),
+//                    rset.getInt(3),
+//                    rset.getDouble(4));
+//        }
+//        return orderdetail;
+//    }
+//
+//    @Override
+//    public ArrayList<OrderdetailDTO> getAll() throws Exception {
+//        ArrayList<OrderdetailDTO> alOrderdetails = new ArrayList<>();
+//        String sql = "select * from Orderdetail";
+//        Statement stm = connection.createStatement();
+//        ResultSet rset = stm.executeQuery(sql);
+//
+//        while (rset.next()) {
+//            String OrderId = rset.getString("OrderId");
+//            String ItemCode = rset.getString("ItemCode");
+//            int Qty = rset.getInt("Qty");
+//            double unitPrice = rset.getDouble("unitPrice");
+//
+//            OrderdetailDTO orderdetail = new OrderdetailDTO(OrderId, ItemCode, Qty, unitPrice);
+//            alOrderdetails.add(orderdetail);
+//        }
+//
+//        return alOrderdetails;
+//
+//    }
 
 
     

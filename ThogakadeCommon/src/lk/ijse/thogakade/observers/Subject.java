@@ -18,6 +18,6 @@ public interface Subject extends Remote{
     
     public void unregisterObserver(Observer observer)throws RemoteException;
     
-    public void notifyAllObservers(String message)throws RemoteException;
+    public void notifyAllObservers()throws RemoteException;
     
 }
