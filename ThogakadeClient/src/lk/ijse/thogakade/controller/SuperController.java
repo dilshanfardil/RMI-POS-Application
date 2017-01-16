@@ -7,7 +7,6 @@ package lk.ijse.thogakade.controller;
 
 import java.rmi.Remote;
 import java.util.ArrayList;
-import lk.ijse.thogakade.service.SuperService;
 
 /**
  *
@@ -24,10 +23,5 @@ public interface SuperController<T> extends Remote{
     public T getbyId(String id) throws Exception;
 
     public ArrayList<T> get() throws Exception;
-    
-    public boolean reserve(String id) throws Exception;
-    
-    public boolean release(String id) throws Exception;
-    
 
 }

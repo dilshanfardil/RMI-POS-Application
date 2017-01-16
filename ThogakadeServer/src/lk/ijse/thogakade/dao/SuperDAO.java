@@ -20,23 +20,7 @@ import lk.ijse.thogakade.dto.SuperDTO;
  */
 public interface SuperDAO<T extends SuperDTO> {
 
-
-//    public enum Tables {
-//
-//        CUSTOMER("customer"), ITEM("item"), ORDER("order"), ORDER_DETAILS("orderdetails");
-//
-//        private String tblName;
-//
-//        private Tables(String tableName) {
-//            tblName = tableName;
-//        }
-//
-//        public String getTableName() {
-//            return tblName;
-//        }
-//    }
-
-    public default boolean save(SuperDTO dto) throws Exception {
+    public default boolean save(T dto) throws Exception {
         //<editor-fold desc="Using Reflective APIs - Save">
         Class<? extends SuperDAO> aClass = this.getClass();
 
@@ -46,7 +30,8 @@ public interface SuperDAO<T extends SuperDTO> {
 
         Connection connection = this.getConnection();
 
-        Field[] declaredFields = aClass.getDeclaredFields();
+        Class<? extends SuperDTO> aClassDTO = dto.getClass();
+        Field[] declaredFields = aClassDTO.getDeclaredFields();
         String sqlStm = "INSERT INTO " + tableName + " VALUES(";
         for (int i = 1; i < declaredFields.length; i++) {
             sqlStm += "?,";
@@ -64,12 +49,11 @@ public interface SuperDAO<T extends SuperDTO> {
         }
 
         int result = pst.executeUpdate();
-        connection.close();
-        return (result < 1);
+        return (result > 0);
         //</editor-fold>
     }
 
-    public default boolean update(SuperDTO dto) throws Exception {
+    public default boolean update(T dto) throws Exception {
         //<editor-fold desc="Using Reflective APIs - Update">
         Class<? extends SuperDAO> aClass = this.getClass();
 
@@ -79,28 +63,33 @@ public interface SuperDAO<T extends SuperDTO> {
 
         Connection connection = this.getConnection();
 
-        Field[] declaredFields = aClass.getDeclaredFields();
+        Class<? extends SuperDTO> aClassDTO = dto.getClass();
+        Field[] declaredFields = aClassDTO.getDeclaredFields();
         Statement statement = connection.createStatement();
-        ResultSet rstColoumnHedding = statement.executeQuery("desc " + tableName + " ;");
+        ResultSet rstColoumnHedding = statement.executeQuery("desc " + tableName + ";");
 
         rstColoumnHedding.next();
         String primaryField = rstColoumnHedding.getString(1);
 
-        String sqlStm = "UPDATE " + tableName + " set ";
+        String sqlStm = "UPDATE " + tableName + " SET ";
 
         while (rstColoumnHedding.next()) {
             sqlStm += (rstColoumnHedding.getString(1) + " = ?,");
         }
-
-        sqlStm += "\b WHERE " + primaryField + "=?";
-
-        PreparedStatement pst = connection.prepareStatement(sqlStm);
-        int i = 4;
+        
+        sqlStm = sqlStm.substring(0, sqlStm.length()-1);
+        sqlStm += " WHERE " + primaryField + " = ?";
+        
+        System.out.println(sqlStm);
+        PreparedStatement pst =connection.prepareStatement(sqlStm);
+        
+        int i = declaredFields.length;
 
         for (Field declaredField : declaredFields) {
             declaredField.setAccessible(true);
             Object value = declaredField.get(dto);
-            if (i == 4) {
+            System.out.println(value);
+            if (i == declaredFields.length) {
                 pst.setObject(i, value);
                 i = 0;
             } else {
@@ -108,13 +97,13 @@ public interface SuperDAO<T extends SuperDTO> {
             }
             i++;
         }
+        System.out.println(pst.toString());
         int result = pst.executeUpdate();
-        connection.close();
-        return (result < 1);
+        return (result > 0);
         //</editor-fold>
     }
 
-    public default boolean delete(SuperDTO dto) throws Exception {
+    public default boolean delete(String id) throws Exception {
         //<editor-fold desc="Using Reflective APIs - Delete">
         Class<? extends SuperDAO> aClass = this.getClass();
 
@@ -124,6 +113,8 @@ public interface SuperDAO<T extends SuperDTO> {
 
         Connection connection = this.getConnection();
 
+        System.out.println(tableName);
+        
         Field[] declaredFields = aClass.getDeclaredFields();
         Statement statement = connection.createStatement();
         ResultSet rstColoumnHedding = statement.executeQuery("desc " + tableName + " ;");
@@ -131,7 +122,10 @@ public interface SuperDAO<T extends SuperDTO> {
         rstColoumnHedding.next();
         String primaryField = rstColoumnHedding.getString(1);
 
-        String sqlStm = "DELETE FROM " + tableName + " WHERE " + primaryField + " = " + declaredFields[0].get(dto);
+        
+        System.out.println(primaryField);
+        
+        String sqlStm = "DELETE FROM " + tableName + " WHERE " + primaryField + " = " + id;
         PreparedStatement pst = connection.prepareStatement(sqlStm);
 
         int i = 1;
@@ -141,7 +135,7 @@ public interface SuperDAO<T extends SuperDTO> {
         //</editor-fold>
     }
 
-    public default T getById(SuperDTO dto) throws Exception {
+    public default T getById(String id) throws Exception {
         //<editor-fold desc="Using Reflective APIs - getByID">
 
         Class<? extends SuperDAO> aClass = this.getClass();
@@ -159,35 +153,33 @@ public interface SuperDAO<T extends SuperDTO> {
         rstColoumnHedding.next();
         String primaryField = rstColoumnHedding.getString(1);
 
-        String sqlStm = "SELECT * FROM " + tableName + " WHERE " + primaryField + " = " + declaredFields[0].get(dto);
+        String sqlStm = "SELECT * FROM " + tableName + " WHERE " + primaryField + " = " + id;
         PreparedStatement pst = connection.prepareStatement(sqlStm);
         ResultSet rst = pst.executeQuery(sqlStm);
         rst.next();
 
         int i = 1;
-
+        T dto = (T) new SuperDTO();
         for (Field declaredField : declaredFields) {
             declaredField.setAccessible(true);
             declaredField.set(dto, rst.getObject(i));
             i++;
         }
-        return (T) dto;
+        return dto;
         //</editor-fold>
     }
 
     public default ArrayList<T> get() throws Exception {
         //<editor-fold desc="Using Reflective APIs - getAll">
-        
+
         Class<? extends SuperDAO> aClass = this.getClass();
 
-        ArrayList<SuperDTO> allDtos = null;
+        ArrayList<T> allDtos = null;
         Field constTabelName = aClass.getDeclaredField("TABLE_NAME");
         constTabelName.setAccessible(true);
         String tableName = (String) constTabelName.get(this);
-        
-        
-        Connection connection = this.getConnection();
 
+        Connection connection = this.getConnection();
         Field[] declaredFields = aClass.getDeclaredFields();
 
         String sqlStm = "SELECT * FROM " + tableName;
@@ -196,42 +188,29 @@ public interface SuperDAO<T extends SuperDTO> {
 
         while (rst.next()) {
             int i = 1;
-            SuperDTO dtoToArray = new SuperDTO();
+            T dto = (T) new SuperDTO();
             for (Field declaredField : declaredFields) {
                 declaredField.setAccessible(true);
-                declaredField.set(dtoToArray, rst.getObject(i));
+                declaredField.set(dto, rst.getObject(i));
                 i++;
             }
-            allDtos.add(dtoToArray);
+            allDtos.add(dto);
         }
-
-        return (ArrayList<T>) allDtos;
+        return allDtos;
         //</editor-fold>
     }
-
 
     public void setConnection(Connection connection) throws Exception;
 
     public Connection getConnection() throws Exception;
-   
-} 
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
-    
+
+}
+
+
+
+
+
+
 //    public boolean save(T dto) throws Exception;
 //    public boolean update(T dto) throws Exception;
 //    public boolean delete(String id) throws Exception;
@@ -248,5 +227,4 @@ public interface SuperDAO<T extends SuperDTO> {
 //    public T get(String id) throws Exception;
 //
 //    public ArrayList<T> getAll() throws Exception;
-
 

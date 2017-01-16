@@ -8,7 +8,7 @@ package lk.ijse.thogakade.bisnuss.custom;
 import java.util.ArrayList;
 import lk.ijse.thogakade.bisnuss.SuperBO;
 import lk.ijse.thogakade.dto.OrderDTO;
-import lk.ijse.thogakade.dto.OrderDetailDTO;
+import lk.ijse.thogakade.dto.OrderdetailDTO;
 
 /**
  *
@@ -16,7 +16,7 @@ import lk.ijse.thogakade.dto.OrderDetailDTO;
  */
 public interface OrderBO extends SuperBO<OrderDTO>{
 
-    public boolean saveOrder(OrderDTO orderDTO, ArrayList<OrderDetailDTO> orderDetailDTO) throws Exception;
+    public boolean saveOrder(OrderDTO Odto, ArrayList<OrderdetailDTO> t) throws Exception;
     
 
 }

@@ -8,6 +8,7 @@ package lk.ijse.thogakade.service.custom.impl;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import lk.ijse.thogakade.bisnuss.BOFactory;
 import lk.ijse.thogakade.bisnuss.custom.CustomerBO;
 import lk.ijse.thogakade.dto.CustomerDTO;
 import lk.ijse.thogakade.observers.Observer;
@@ -20,17 +21,15 @@ import lk.ijse.thogakade.service.custom.CustomerService;
 public class CustomerServiceImpl extends UnicastRemoteObject implements CustomerService {
 
     private CustomerBO customerBO;
-  
-  private static Reservation customerReservation = new Reservation();
 
     private static ArrayList<Observer> alObservers = new ArrayList<>();
 
     public CustomerServiceImpl() throws Exception {
-//        try {
-//            customerBO = (CustomerBO) BOFactory.getInstance().getBOTypes(BOFactory.BOType.CUSTOMER);
-//        } catch (Exception ex) {
-//
-//        }
+        try {
+            customerBO = (CustomerBO) BOFactory.getInstance().getBOTypes(BOFactory.BOType.CUSTOMER);
+        } catch (Exception ex) {
+
+        }
     }
 
     @Override
@@ -79,17 +78,6 @@ public class CustomerServiceImpl extends UnicastRemoteObject implements Customer
         for (Observer alObserver : alObservers) {
             alObserver.update();
         }
-    }
-  
-  
-    @Override
-    public boolean reserve(String id, SuperService superService) throws Exception {
-        return customerReservation.reserve(id, superService);
-    }
-
-    @Override
-    public boolean release(String id) throws Exception {
-        return customerReservation.release(id);
     }
 
 }
