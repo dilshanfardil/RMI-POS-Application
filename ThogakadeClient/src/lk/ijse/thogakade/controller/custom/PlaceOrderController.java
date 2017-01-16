@@ -16,6 +16,6 @@ import lk.ijse.thogakade.dto.OrderdetailDTO;
  */
 public interface PlaceOrderController extends SuperController<OrderDTO>{
     
-    public boolean saveOrder(OrderDTO orderDTO, ArrayList<OrderdetailDTO> orderDetailAry);
+    public boolean saveOrder(OrderDTO orderDTO, ArrayList<OrderdetailDTO> orderDetailAry)throws Exception ;
     
 }

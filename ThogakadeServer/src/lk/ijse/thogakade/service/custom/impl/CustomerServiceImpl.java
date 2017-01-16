@@ -1,4 +1,5 @@
 
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -6,11 +7,15 @@
  */
 package lk.ijse.thogakade.service.custom.impl;
 
+import lk.ijse.thogakade.service.SuperService;
+
+
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import lk.ijse.thogakade.bisnuss.BOFactory;
 import lk.ijse.thogakade.bisnuss.custom.CustomerBO;
 import lk.ijse.thogakade.dto.CustomerDTO;
+import lk.ijse.thogakade.reservation.impl.Reservation;
 import lk.ijse.thogakade.service.custom.CustomerService;
 
 /**
@@ -20,6 +25,8 @@ import lk.ijse.thogakade.service.custom.CustomerService;
 public class CustomerServiceImpl extends UnicastRemoteObject implements CustomerService {
 
     private CustomerBO customerBO;
+    
+    private static Reservation customerReservation = new Reservation();
 
     public CustomerServiceImpl() throws Exception {
         try {
@@ -54,5 +61,17 @@ public class CustomerServiceImpl extends UnicastRemoteObject implements Customer
         return customerBO.get();
     }
 
+    @Override
+    public boolean reserve(String id, SuperService superService) throws Exception {
+        return customerReservation.reserve(id, superService);
+    }
+
+    @Override
+    public boolean release(String id) throws Exception {
+        return customerReservation.release(id);
+    }
+
+    
 }
+
 

@@ -25,7 +25,8 @@ public class PlaceOrderControllerImpl implements PlaceOrderController {
         orderService = (OrderService) ServerConnectorFactory.getInstance().getService(ServiceFactory.ServiceTypes.ORDER);
     }
     
-    public boolean saveOrder(OrderDTO orderDTO, ArrayList<OrderdetailDTO> orderDetailAry){
+    @Override
+    public boolean saveOrder(OrderDTO orderDTO, ArrayList<OrderdetailDTO> orderDetailAry)throws Exception {
         return orderService.saveOrder(orderDTO,orderDetailAry);
     
     }
@@ -53,7 +54,6 @@ public class PlaceOrderControllerImpl implements PlaceOrderController {
     @Override
     public ArrayList<OrderDTO> get() throws Exception {
                 return orderService.get();
-
     }
 
 }

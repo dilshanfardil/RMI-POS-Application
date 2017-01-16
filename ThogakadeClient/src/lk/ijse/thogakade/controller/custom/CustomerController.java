@@ -13,5 +13,7 @@ import lk.ijse.thogakade.dto.CustomerDTO;
  * @author student
  */
 public interface CustomerController extends SuperController<CustomerDTO>{
+
+    
     
 }
