@@ -6,6 +6,7 @@
 package lk.ijse.thogakade.service;
 
 import java.rmi.Remote;
+import java.rmi.RemoteException;
 
 /**
  *
@@ -18,6 +19,5 @@ public interface ServiceFactory extends Remote{
     }
     
     public SuperService getService(ServiceTypes serviceType) throws Exception;
-    
     
 }

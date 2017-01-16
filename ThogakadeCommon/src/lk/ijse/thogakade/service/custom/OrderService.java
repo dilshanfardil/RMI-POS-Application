@@ -5,9 +5,8 @@
  */
 package lk.ijse.thogakade.service.custom;
 
-import java.util.ArrayList;
+import java.rmi.Remote;
 import lk.ijse.thogakade.dto.OrderDTO;
-import lk.ijse.thogakade.dto.OrderdetailDTO;
 import lk.ijse.thogakade.service.SuperService;
 
 /**
@@ -15,9 +14,5 @@ import lk.ijse.thogakade.service.SuperService;
  * @author student
  */
 public interface OrderService extends SuperService<OrderDTO>{
-
-    public boolean saveOrder(OrderDTO orderDTO, ArrayList<OrderdetailDTO> orderDetailAry)throws Exception;
-
-    
     
 }

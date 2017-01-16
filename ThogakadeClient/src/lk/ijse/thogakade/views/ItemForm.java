@@ -28,9 +28,7 @@ public class ItemForm extends javax.swing.JFrame {
     public ItemForm() {
         initComponents();
         try {
-
             ctrlItem = (ItemController) ControllerFactory.getInstance().getController(ControllerFactory.ControllerTypes.ITEM);
-
         } catch (Exception ex) {
             System.out.println(ex);
         }
@@ -360,7 +358,7 @@ public class ItemForm extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        try {
+       try {
             ItemDTO item = new ItemDTO(txtID.getText(),
                     txtName.getText(),
                     Double.parseDouble(txtPrice.getText()),

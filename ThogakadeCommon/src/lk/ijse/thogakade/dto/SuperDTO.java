@@ -6,12 +6,11 @@
 package lk.ijse.thogakade.dto;
 
 import java.io.Serializable;
-import java.rmi.Remote;
 
 /**
  *
  * @author student
  */
-public class SuperDTO implements Remote, Serializable {
+public class SuperDTO implements Serializable {
     
 }

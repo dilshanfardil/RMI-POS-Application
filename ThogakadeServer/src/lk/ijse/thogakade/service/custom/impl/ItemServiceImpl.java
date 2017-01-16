@@ -12,6 +12,8 @@ import lk.ijse.thogakade.bisnuss.BOFactory;
 import lk.ijse.thogakade.bisnuss.custom.ItemBO;
 import lk.ijse.thogakade.dto.ItemDTO;
 import lk.ijse.thogakade.observers.Observer;
+import lk.ijse.thogakade.reservation.impl.Reservation;
+import lk.ijse.thogakade.service.SuperService;
 import lk.ijse.thogakade.service.custom.ItemService;
 
 /**
@@ -21,13 +23,15 @@ import lk.ijse.thogakade.service.custom.ItemService;
 public class ItemServiceImpl extends UnicastRemoteObject implements ItemService {
 
     private ItemBO itemBO;
-
+    private static Reservation itemReservation = new Reservation();
     private static ArrayList<Observer> alObservers = new ArrayList<>();
 
     public ItemServiceImpl() throws Exception {
         try {
             itemBO = (ItemBO) BOFactory.getInstance().getBOTypes(BOFactory.BOType.ITEM);
-        
+        } catch (Exception ex) {
+            System.out.println("a  " + ex);
+        }
     }
 
     @Override
@@ -74,6 +78,16 @@ public class ItemServiceImpl extends UnicastRemoteObject implements ItemService 
         for (Observer alObserver : alObservers) {
             alObserver.update();
         }
+    }
+
+    @Override
+    public boolean reserve(String id, SuperService superService) throws Exception {
+        return itemReservation.reserve(id, superService);
+    }
+
+    @Override
+    public boolean release(String id) throws Exception {
+        return itemReservation.release(id);
     }
 
 }
