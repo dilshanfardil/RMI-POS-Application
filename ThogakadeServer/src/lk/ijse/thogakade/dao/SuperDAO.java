@@ -16,20 +16,20 @@ import lk.ijse.thogakade.dto.SuperDTO;
  */
 public interface SuperDAO<T extends SuperDTO> {
 
-    public enum Tables {
-
-        CUSTOMER("customer"), ITEM("item"), ORDER("order"), ORDER_DETAILS("orderdetails");
-
-        private String tblName;
-
-        private Tables(String tableName) {
-            tblName = tableName;
-        }
-
-        public String getTableName() {
-            return tblName;
-        }
-    }
+//    public enum Tables {
+//
+//        CUSTOMER("customer"), ITEM("item"), ORDER("order"), ORDER_DETAILS("orderdetails");
+//
+//        private String tblName;
+//
+//        private Tables(String tableName) {
+//            tblName = tableName;
+//        }
+//
+//        public String getTableName() {
+//            return tblName;
+//        }
+//    }
 
     public void setConnection(Connection connection) throws Exception;
 

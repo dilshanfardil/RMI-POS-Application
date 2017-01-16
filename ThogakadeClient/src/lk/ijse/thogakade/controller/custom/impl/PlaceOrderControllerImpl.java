@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import lk.ijse.thogakade.controller.ServerConnectorFactory;
 import lk.ijse.thogakade.controller.custom.PlaceOrderController;
 import lk.ijse.thogakade.dto.OrderDTO;
+import lk.ijse.thogakade.dto.OrderdetailDTO;
 import lk.ijse.thogakade.service.ServiceFactory;
 import lk.ijse.thogakade.service.custom.OrderService;
 
@@ -23,30 +24,36 @@ public class PlaceOrderControllerImpl implements PlaceOrderController {
     public PlaceOrderControllerImpl() throws Exception{
         orderService = (OrderService) ServerConnectorFactory.getInstance().getService(ServiceFactory.ServiceTypes.ORDER);
     }
+    
+    public boolean saveOrder(OrderDTO orderDTO, ArrayList<OrderdetailDTO> orderDetailAry){
+        return orderService.saveOrder(orderDTO,orderDetailAry);
+    
+    }
 
     @Override
     public boolean save(OrderDTO t) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return orderService.save(t);
     }
 
     @Override
     public boolean update(OrderDTO t) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return orderService.update(t);
     }
 
     @Override
     public boolean delete(String id) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return orderService.delete(id);
     }
 
     @Override
     public OrderDTO getbyId(String id) throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return orderService.getbyId(id);
     }
 
     @Override
     public ArrayList<OrderDTO> get() throws Exception {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+                return orderService.get();
+
     }
 
 }

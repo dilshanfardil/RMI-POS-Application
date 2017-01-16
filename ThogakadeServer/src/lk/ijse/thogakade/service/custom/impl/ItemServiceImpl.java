@@ -21,11 +21,9 @@ public class ItemServiceImpl extends UnicastRemoteObject implements ItemService{
     private ItemBO itemBO;
     
     public  ItemServiceImpl() throws Exception{
-        try {
+        
             itemBO = (ItemBO) BOFactory.getInstance().getBOTypes(BOFactory.BOType.ITEM);
-        } catch (Exception ex) {
-            System.out.println("a  " + ex);
-        }
+        
     }
     
     @Override
