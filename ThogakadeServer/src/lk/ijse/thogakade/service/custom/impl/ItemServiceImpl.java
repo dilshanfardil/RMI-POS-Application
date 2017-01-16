@@ -5,35 +5,43 @@
  */
 package lk.ijse.thogakade.service.custom.impl;
 
+import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
 import lk.ijse.thogakade.bisnuss.BOFactory;
 import lk.ijse.thogakade.bisnuss.custom.ItemBO;
 import lk.ijse.thogakade.dto.ItemDTO;
+import lk.ijse.thogakade.observers.Observer;
 import lk.ijse.thogakade.service.custom.ItemService;
 
 /**
  *
  * @author Dilshan
  */
-public class ItemServiceImpl extends UnicastRemoteObject implements ItemService{
+public class ItemServiceImpl extends UnicastRemoteObject implements ItemService {
 
     private ItemBO itemBO;
-    
-    public  ItemServiceImpl() throws Exception{
-        
+
+    private static ArrayList<Observer> alObservers = new ArrayList<>();
+
+    public ItemServiceImpl() throws Exception {
+        try {
             itemBO = (ItemBO) BOFactory.getInstance().getBOTypes(BOFactory.BOType.ITEM);
         
     }
-    
+
     @Override
     public boolean save(ItemDTO t) throws Exception {
-        return itemBO.save(t);
+        boolean result = itemBO.save(t);
+        notifyAllObservers();
+        return result;
     }
 
     @Override
     public boolean update(ItemDTO t) throws Exception {
-        return itemBO.update(t);
+        boolean result = itemBO.update(t);
+        notifyAllObservers();
+        return result;
     }
 
     @Override
@@ -50,5 +58,22 @@ public class ItemServiceImpl extends UnicastRemoteObject implements ItemService{
     public ArrayList<ItemDTO> get() throws Exception {
         return itemBO.get();
     }
-    
+
+    @Override
+    public void registerObserver(Observer observer) throws RemoteException {
+        alObservers.add(observer);
+    }
+
+    @Override
+    public void unregisterObserver(Observer observer) throws RemoteException {
+        alObservers.remove(observer);
+    }
+
+    @Override
+    public void notifyAllObservers() throws RemoteException {
+        for (Observer alObserver : alObservers) {
+            alObserver.update();
+        }
+    }
+
 }

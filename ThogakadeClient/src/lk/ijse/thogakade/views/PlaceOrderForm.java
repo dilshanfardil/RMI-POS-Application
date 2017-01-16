@@ -11,6 +11,8 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Observable;
+import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -31,7 +33,7 @@ import lk.ijse.thogakade.dto.OrderdetailDTO;
  *
  * @author linux
  */
-public class PlaceOrderForm extends javax.swing.JFrame {
+public class PlaceOrderForm extends javax.swing.JFrame implements Observer{
 
     private CustomerController ctrlCustomer;
     private ItemController ctrlItem;
@@ -683,6 +685,13 @@ public class PlaceOrderForm extends javax.swing.JFrame {
             Logger.getLogger(PlaceOrderForm.class.getName()).log(Level.SEVERE, null, ex);
         }
         return null;
+    }
+
+    @Override
+    public void update(Observable o, Object arg) {
+        JOptionPane.showMessageDialog(this, "updated");
+        loadCustomerCombo();
+        loadItemCombo();
     }
 
 }

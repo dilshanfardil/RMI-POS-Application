@@ -26,6 +26,11 @@ public class ItemDAOImpl implements ItemDAO {
     public void setConnection(Connection connection) throws Exception {
         this.connection = connection;
     }
+
+    @Override
+    public Connection getConnection() throws Exception {
+        return this.connection;
+    }
     
 }
 
