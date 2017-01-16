@@ -22,32 +22,38 @@ import lk.ijse.thogakade.dto.OrderDTO;
 public class OrderDAOImpl implements OrderDAO{
 
     private Connection connection;
+    private final String TABLE_NAME = "Orders";
 
     @Override
     public void setConnection(Connection connection) throws Exception {
         this.connection = connection;
     }
 
-    @Override
-    public boolean save(OrderDTO order) throws Exception {
-        PreparedStatement pst = connection.prepareStatement("INSERT INTO orders VALUES(?,?,?)");
-        pst.setObject(1, order.getOrderId());
-        pst.setObject(2, order.getOrderDate());
-        pst.setObject(3, order.getCustId());
-        int result = pst.executeUpdate();
-        return (result > 0);
+     @Override
+    public Connection getConnection() throws Exception {
+        return this.connection;
     }
+    
+//    @Override
+//    public boolean save(OrderDTO order) throws Exception {
+//        PreparedStatement pst = connection.prepareStatement("INSERT INTO orders VALUES(?,?,?)");
+//        pst.setObject(1, order.getOrderId());
+//        pst.setObject(2, order.getOrderDate());
+//        pst.setObject(3, order.getCustId());
+//        int result = pst.executeUpdate();
+//        return (result > 0);
+//    }
 
-    @Override
-    public boolean update(OrderDTO order) throws Exception {
-        PreparedStatement pst = connection.prepareStatement("Update orders set date=?, customerId=? where id=?");
-        pst.setObject(3, order.getOrderId());
-        pst.setObject(1, order.getOrderDate());
-        pst.setObject(2, order.getCustId());
-        
-        int result = pst.executeUpdate();
-        return (result > 0);
-    }
+//    @Override
+//    public boolean update(OrderDTO order) throws Exception {
+//        PreparedStatement pst = connection.prepareStatement("Update orders set date=?, customerId=? where id=?");
+//        pst.setObject(3, order.getOrderId());
+//        pst.setObject(1, order.getOrderDate());
+//        pst.setObject(2, order.getCustId());
+//        
+//        int result = pst.executeUpdate();
+//        return (result > 0);
+//    }
 
     @Override
     public boolean delete(String id) throws Exception {

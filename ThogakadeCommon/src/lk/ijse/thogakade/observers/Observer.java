@@ -12,8 +12,12 @@ import java.rmi.RemoteException;
  *
  * @author student
  */
-public interface Observer extends Remote{
+public interface Observer extends Remote {
     
     public void update(String messgae)throws RemoteException;
+    
+    default void x(){
+        
+    }
     
 }
