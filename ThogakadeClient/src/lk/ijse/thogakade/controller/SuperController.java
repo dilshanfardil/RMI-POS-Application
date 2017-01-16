@@ -24,4 +24,8 @@ public interface SuperController<T> extends Remote{
 
     public ArrayList<T> get() throws Exception;
 
+    public boolean reserve(String id) throws Exception;
+    
+    public boolean release(String id) throws Exception;
+    
 }

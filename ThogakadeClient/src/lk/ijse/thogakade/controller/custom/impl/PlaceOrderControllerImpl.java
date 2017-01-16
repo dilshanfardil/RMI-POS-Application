@@ -49,4 +49,14 @@ public class PlaceOrderControllerImpl implements PlaceOrderController {
         return orderService.get();
     }
 
+    @Override
+    public boolean reserve(String id) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean release(String id) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 }

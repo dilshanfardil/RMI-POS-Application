@@ -12,6 +12,7 @@ import lk.ijse.thogakade.bisnuss.BOFactory;
 import lk.ijse.thogakade.bisnuss.custom.OrderBO;
 import lk.ijse.thogakade.dto.OrderDTO;
 import lk.ijse.thogakade.observers.Observer;
+import lk.ijse.thogakade.service.SuperService;
 import lk.ijse.thogakade.service.custom.OrderService;
 
 /**
@@ -71,6 +72,16 @@ public class OrderServiceImpl extends UnicastRemoteObject implements OrderServic
         for (Observer alObserver : alObservers) {
             alObserver.update();
         }
+    }
+
+    @Override
+    public boolean reserve(String id, SuperService superService) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public boolean release(String id) throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
 }

@@ -343,6 +343,7 @@ public class ItemForm extends javax.swing.JFrame {
 
             boolean result = ctrlItem.update(item);
             if (result) {
+                ctrlItem.release(txtID.getText());
                 loadTable();
                 clear();
                 JOptionPane.showMessageDialog(this, "Item has been successfully UPDATED");
@@ -357,7 +358,7 @@ public class ItemForm extends javax.swing.JFrame {
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        try {
+       try {
             ItemDTO item = new ItemDTO(txtID.getText(),
                     txtName.getText(),
                     Double.parseDouble(txtPrice.getText()),
@@ -365,6 +366,7 @@ public class ItemForm extends javax.swing.JFrame {
 
             boolean result = ctrlItem.delete(txtID.getText());
             if (result) {
+                ctrlItem.release(txtID.getText());
                 JOptionPane.showMessageDialog(this, "Item has been successfully deleted");
 
             } else {
@@ -381,10 +383,14 @@ public class ItemForm extends javax.swing.JFrame {
         if (evt.getClickCount() == 2) {
             try {
                 ItemDTO resDTO = ctrlItem.getbyId(tblItem.getValueAt(tblItem.getSelectedRow(), 0).toString());
-                txtID.setText(resDTO.getCode());
-                txtName.setText(resDTO.getDescription());
-                txtPrice.setText(resDTO.getUnitPrice() + "");
-                txtQtyOnHand.setText(resDTO.getQtyOnHand() + "");
+                if(ctrlItem.reserve(resDTO.getCode())){
+                    txtID.setText(resDTO.getCode());
+                    txtName.setText(resDTO.getDescription());
+                    txtPrice.setText(resDTO.getUnitPrice() + "");
+                    txtQtyOnHand.setText(resDTO.getQtyOnHand() + "");
+                }else{
+                    JOptionPane.showMessageDialog(this, "Please wait..");
+                }    
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
