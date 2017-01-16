@@ -7,13 +7,7 @@
 package lk.ijse.thogakade.dao.custom.impl;
 
 import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.Statement;
-import java.util.ArrayList;
 import lk.ijse.thogakade.dao.custom.OrderDAO;
-import lk.ijse.thogakade.dto.OrderDTO;
 
 /**
  *
@@ -55,47 +49,47 @@ public class OrderDAOImpl implements OrderDAO{
 //        return (result > 0);
 //    }
 
-    @Override
-    public boolean delete(String id) throws Exception {
-        PreparedStatement pst = connection.prepareStatement("Delete From orders where id='" + id + "'");
-        int result = pst.executeUpdate();
-        return (result > 0);
-    }
-
-    @Override
-    public OrderDTO get(String id) throws Exception {
-        OrderDTO order = null;
-        String sql = "SELECT * FROM orders WHERE id = '" + id + "' ";
-        Statement stm = connection.createStatement();
-        ResultSet rset = stm.executeQuery(sql);
-        if (rset.next()) {
-            order = new OrderDTO(
-                    rset.getString(1),
-                    rset.getDate(2),
-                    rset.getString(3));
-                    
-        }
-        return order;
-    }
-
-    @Override
-    public ArrayList<OrderDTO> getAll() throws Exception {
-        ArrayList<OrderDTO> allorders = new ArrayList<>();
-        String sql = "select * from orders";
-        Statement stm = connection.createStatement();
-        ResultSet rset = stm.executeQuery(sql);
-
-        while (rset.next()) {
-            String OrderId = rset.getString("id");
-            Date date = rset.getDate("date");
-            String CustId = rset.getString("customerId");
-
-            OrderDTO order = new OrderDTO(OrderId, date, CustId);
-            allorders.add(order);
-        }
-
-        return allorders;
-    }
+//    @Override
+//    public boolean delete(String id) throws Exception {
+//        PreparedStatement pst = connection.prepareStatement("Delete From orders where id='" + id + "'");
+//        int result = pst.executeUpdate();
+//        return (result > 0);
+//    }
+//
+//    @Override
+//    public OrderDTO get(String id) throws Exception {
+//        OrderDTO order = null;
+//        String sql = "SELECT * FROM orders WHERE id = '" + id + "' ";
+//        Statement stm = connection.createStatement();
+//        ResultSet rset = stm.executeQuery(sql);
+//        if (rset.next()) {
+//            order = new OrderDTO(
+//                    rset.getString(1),
+//                    rset.getDate(2),
+//                    rset.getString(3));
+//                    
+//        }
+//        return order;
+//    }
+//
+//    @Override
+//    public ArrayList<OrderDTO> getAll() throws Exception {
+//        ArrayList<OrderDTO> allorders = new ArrayList<>();
+//        String sql = "select * from orders";
+//        Statement stm = connection.createStatement();
+//        ResultSet rset = stm.executeQuery(sql);
+//
+//        while (rset.next()) {
+//            String OrderId = rset.getString("id");
+//            Date date = rset.getDate("date");
+//            String CustId = rset.getString("customerId");
+//
+//            OrderDTO order = new OrderDTO(OrderId, date, CustId);
+//            allorders.add(order);
+//        }
+//
+//        return allorders;
+//    }
 
     
 

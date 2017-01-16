@@ -7,12 +7,13 @@ package lk.ijse.thogakade.service;
 
 import java.rmi.Remote;
 import java.util.ArrayList;
+import lk.ijse.thogakade.observers.Subject;
 
 /**
  *
  * @author student
  */
-public interface SuperService<T> extends Remote {
+public interface SuperService<T> extends Remote,Subject {
 
     public boolean save(T t) throws Exception;
 
