@@ -30,7 +30,6 @@ public class CustomerBOImpl implements CustomerBO {
         Connection connection = ConnectionFactory.getInstance().getConnection();
         customerDAO.setConnection(connection);
         boolean reselt = customerDAO.save(t);
-//        boolean result = customerDAO.save(SuperDAO.Tables.CUSTOMER, t);
         connection.close();
         return reselt;
     }
@@ -47,31 +46,39 @@ public class CustomerBOImpl implements CustomerBO {
 
     @Override
     public boolean delete(String id) throws Exception {
-        Connection connection = ConnectionFactory.getInstance().getConnection();
-        customerDAO.setConnection(connection);
-        boolean reselt = customerDAO.delete(id);
-        connection.close();
-        return reselt;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public CustomerDTO getbyId(String id) throws Exception {
-        Connection connection = ConnectionFactory.getInstance().getConnection();
-        customerDAO.setConnection(connection);
-        CustomerDTO customerDTO = customerDAO.get(id);
-        connection.close();
-        return customerDTO;
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
     public ArrayList<CustomerDTO> get() throws Exception {
-        
+
         Connection connection = ConnectionFactory.getInstance().getConnection();
         customerDAO.setConnection(connection);
-        ArrayList<CustomerDTO> allCustomers = customerDAO.getAll();
+        ArrayList<CustomerDTO> allCustomers = customerDAO.get();
         connection.close();
         return allCustomers;
 
     }
 
+    //    @Override
+//    public boolean delete(CustomerDTO t) throws Exception {
+//        Connection connection = ConnectionFactory.getInstance().getConnection();
+//        customerDAO.setConnection(connection);
+//        boolean reselt = customerDAO.delete(t);
+//        connection.close();
+//        return reselt;
+//    }
+//    @Override
+//    public CustomerDTO getbyId(CustomerDTO t) throws Exception {
+//        Connection connection = ConnectionFactory.getInstance().getConnection();
+//        customerDAO.setConnection(connection);
+//        CustomerDTO customerDTO = customerDAO.get(t);
+//        connection.close();
+//        return customerDTO;
+//    }
 }

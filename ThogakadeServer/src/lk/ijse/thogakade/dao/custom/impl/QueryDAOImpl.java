@@ -45,5 +45,10 @@ public class QueryDAOImpl implements QueryDAO{
     public void setConnection(Connection connection) throws Exception {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public Connection getConnection() throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }

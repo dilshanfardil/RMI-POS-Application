@@ -20,34 +20,40 @@ import lk.ijse.thogakade.dto.OrderdetailDTO;
 public class OrderDetailsDAOImpl implements OrderDetailsDAO{
 
     private Connection connection;
+    private final String TABLE_NAME = "OrderDetail";
     
     @Override
     public void setConnection(Connection connection) throws Exception {
         this.connection = connection;
     }    
 
-    @Override
-    public boolean save(OrderdetailDTO orderdetail) throws Exception {
-        PreparedStatement pst = connection.prepareStatement("INSERT INTO Orderdetail VALUES(?,?,?,?)");
-        pst.setObject(1, orderdetail.getOrderId());
-        pst.setObject(2, orderdetail.getItemCode());
-        pst.setObject(3, orderdetail.getQty());
-        pst.setObject(4, orderdetail.getUnitPrice());
-        int result = pst.executeUpdate();
-        return (result > 0);
+     @Override
+    public Connection getConnection() throws Exception {
+        return this.connection;
     }
+    
+//    @Override
+//    public boolean save(OrderdetailDTO orderdetail) throws Exception {
+//        PreparedStatement pst = connection.prepareStatement("INSERT INTO Orderdetail VALUES(?,?,?,?)");
+//        pst.setObject(1, orderdetail.getOrderId());
+//        pst.setObject(2, orderdetail.getItemCode());
+//        pst.setObject(3, orderdetail.getQty());
+//        pst.setObject(4, orderdetail.getUnitPrice());
+//        int result = pst.executeUpdate();
+//        return (result > 0);
+//    }
 
-    @Override
-    public boolean update(OrderdetailDTO orderdetail) throws Exception {
-        PreparedStatement pst = connection.prepareStatement("Update Orderdetail set ItemCode=?, Qty=?, UnitPrice=? where OrderId=?");
-        pst.setObject(4, orderdetail.getOrderId());
-        pst.setObject(1, orderdetail.getItemCode());
-        pst.setObject(2, orderdetail.getQty());
-        pst.setObject(3, orderdetail.getUnitPrice());
-        int result = pst.executeUpdate();
-        return (result > 0);
-
-    }
+//    @Override
+//    public boolean update(OrderdetailDTO orderdetail) throws Exception {
+//        PreparedStatement pst = connection.prepareStatement("Update Orderdetail set ItemCode=?, Qty=?, UnitPrice=? where OrderId=?");
+//        pst.setObject(4, orderdetail.getOrderId());
+//        pst.setObject(1, orderdetail.getItemCode());
+//        pst.setObject(2, orderdetail.getQty());
+//        pst.setObject(3, orderdetail.getUnitPrice());
+//        int result = pst.executeUpdate();
+//        return (result > 0);
+//
+//    }
 
     @Override
     public boolean delete(String id) throws Exception {

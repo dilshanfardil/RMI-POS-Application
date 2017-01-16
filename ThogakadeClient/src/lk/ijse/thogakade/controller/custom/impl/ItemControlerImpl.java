@@ -21,7 +21,6 @@ public class ItemControlerImpl implements ItemController {
     private ItemService itemService;
 
     public ItemControlerImpl() throws Exception {
-//        itemService = (ItemService) ServerConnectorFactory.getInstance().getService(ServiceFactory.ServiceTypes.ITEM);
         itemService = (ItemService) ServerConnectorFactory.getInstance().getService(ServiceFactory.ServiceTypes.ITEM);
     }
 
