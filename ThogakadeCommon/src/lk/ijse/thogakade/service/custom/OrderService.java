@@ -5,7 +5,6 @@
  */
 package lk.ijse.thogakade.service.custom;
 
-import java.rmi.Remote;
 import lk.ijse.thogakade.dto.OrderDTO;
 import lk.ijse.thogakade.service.SuperService;
 

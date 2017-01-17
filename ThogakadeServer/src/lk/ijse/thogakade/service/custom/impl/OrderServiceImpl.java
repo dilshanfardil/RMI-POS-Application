@@ -44,7 +44,9 @@ public class OrderServiceImpl extends UnicastRemoteObject implements OrderServic
 
     @Override
     public boolean delete(String id) throws Exception {
-        return orderBO.delete(id);
+        boolean result = orderBO.delete(id);
+        notifyAllObservers();
+        return result;
     }
 
     @Override

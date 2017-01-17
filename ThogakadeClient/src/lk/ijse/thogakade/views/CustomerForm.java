@@ -108,6 +108,11 @@ public class CustomerForm extends javax.swing.JFrame{
 
         jLabel6.setText("Customer ID");
 
+        txtcustomerID.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtcustomerIDActionPerformed(evt);
+            }
+        });
         txtcustomerID.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyReleased(java.awt.event.KeyEvent evt) {
                 txtcustomerIDKeyReleased(evt);
@@ -411,6 +416,10 @@ public class CustomerForm extends javax.swing.JFrame{
             Logger.getLogger(CustomerForm.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void txtcustomerIDActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtcustomerIDActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtcustomerIDActionPerformed
 
     /**
      * @param args the command line arguments

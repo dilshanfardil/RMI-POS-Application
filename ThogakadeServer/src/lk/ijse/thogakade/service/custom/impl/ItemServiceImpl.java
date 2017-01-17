@@ -50,7 +50,9 @@ public class ItemServiceImpl extends UnicastRemoteObject implements ItemService 
 
     @Override
     public boolean delete(String id) throws Exception {
-        return itemBO.delete(id);
+        boolean result = itemBO.delete(id);
+        notifyAllObservers();
+        return result;
     }
 
     @Override
