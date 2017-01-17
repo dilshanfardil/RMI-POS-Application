@@ -20,14 +20,15 @@ import lk.ijse.thogakade.dto.ItemDTO;
 public class ItemBOImpl implements ItemBO {
 
     ItemDAO itemDAO;
+    Connection connection;
 
     public ItemBOImpl() throws Exception {
         itemDAO = (ItemDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ITEM);
+        connection = ConnectionFactory.getInstance().getConnection();
     }
 
     @Override
     public boolean save(ItemDTO t) throws Exception {
-        Connection connection = ConnectionFactory.getInstance().getConnection();
         itemDAO.setConnection(connection);
         boolean reselt = itemDAO.save(t);
         connection.close();
@@ -36,7 +37,6 @@ public class ItemBOImpl implements ItemBO {
 
     @Override
     public boolean update(ItemDTO t) throws Exception {
-        Connection connection = ConnectionFactory.getInstance().getConnection();
         itemDAO.setConnection(connection);
         boolean reselt = itemDAO.update(t);
         connection.close();
@@ -45,7 +45,6 @@ public class ItemBOImpl implements ItemBO {
 
     @Override
     public boolean delete(String id) throws Exception {
-        Connection connection = ConnectionFactory.getInstance().getConnection();
         itemDAO.setConnection(connection);
         boolean reselt = itemDAO.delete(id);
         connection.close();
@@ -54,18 +53,16 @@ public class ItemBOImpl implements ItemBO {
 
     @Override
     public ItemDTO getbyId(String id) throws Exception {
-        Connection connection = ConnectionFactory.getInstance().getConnection();
         itemDAO.setConnection(connection);
-        ItemDTO itemDTO = itemDAO.get(id);
+        ItemDTO itemDTO = itemDAO.getById(id);
         connection.close();
         return itemDTO;
     }
 
     @Override
     public ArrayList<ItemDTO> get() throws Exception {
-        Connection connection = ConnectionFactory.getInstance().getConnection();
         itemDAO.setConnection(connection);
-        ArrayList<ItemDTO> allitems = itemDAO.getAll();
+        ArrayList<ItemDTO> allitems = itemDAO.get();
         connection.close();
         return allitems;
     }

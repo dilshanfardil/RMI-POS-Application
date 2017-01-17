@@ -25,16 +25,17 @@ public class OrderBOImpl implements OrderBO {
     OrderDetailsDAO orderdetailDAO;
     OrderDAO orderDAO;
     ItemDAO itemDAO;
+    Connection connection;
 
-    public OrderBOImpl() {
+    public OrderBOImpl() throws Exception {
         orderdetailDAO = (OrderDetailsDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ORDER_DETAILS);
         orderDAO = (OrderDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ORDER);
         itemDAO = (ItemDAO) DAOFactory.getInstance().getDAO(DAOFactory.DAOTypes.ITEM);
+        connection = ConnectionFactory.getInstance().getConnection();
     }
 
     @Override
-    public boolean saveOrder(OrderDTO Odto, ArrayList<OrderdetailDTO> t) throws Exception {
-        Connection connection = ConnectionFactory.getInstance().getConnection();
+    public boolean saveOrder(OrderDTO Odto, ArrayList<OrderdetailDTO> t) throws Exception {        
         orderDAO.setConnection(connection);
         orderdetailDAO.setConnection(connection);
 

@@ -8,6 +8,7 @@ package lk.ijse.thogakade.service.custom.impl;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.util.ArrayList;
+import lk.ijse.thogakade.bisnuss.BOFactory;
 import lk.ijse.thogakade.bisnuss.custom.CustomerBO;
 import lk.ijse.thogakade.dto.CustomerDTO;
 import lk.ijse.thogakade.observers.Observer;
@@ -24,11 +25,11 @@ public class CustomerServiceImpl extends UnicastRemoteObject implements Customer
     private static ArrayList<Observer> alObservers = new ArrayList<>();
 
     public CustomerServiceImpl() throws Exception {
-//        try {
-//            customerBO = (CustomerBO) BOFactory.getInstance().getBOTypes(BOFactory.BOType.CUSTOMER);
-//        } catch (Exception ex) {
-//
-//        }
+        try {
+            customerBO = (CustomerBO) BOFactory.getInstance().getBOTypes(BOFactory.BOType.CUSTOMER);
+        } catch (Exception ex) {
+
+        }
     }
 
     @Override

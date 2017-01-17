@@ -16,7 +16,7 @@ public class CustomerDAOImpl implements CustomerDAO {
 
     private Connection connection;
 
-    private final String TABLE_NAME = "Customer";
+    private final String TABLE_NAME = "customer";
 
     @Override
     public void setConnection(Connection connection) throws Exception {

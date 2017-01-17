@@ -28,9 +28,7 @@ public class ItemForm extends javax.swing.JFrame {
     public ItemForm() {
         initComponents();
         try {
-
             ctrlItem = (ItemController) ControllerFactory.getInstance().getController(ControllerFactory.ControllerTypes.ITEM);
-
         } catch (Exception ex) {
             System.out.println(ex);
         }
