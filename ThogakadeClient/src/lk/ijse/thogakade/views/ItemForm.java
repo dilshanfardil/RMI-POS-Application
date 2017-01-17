@@ -5,6 +5,7 @@
  */
 package lk.ijse.thogakade.views;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,12 +14,13 @@ import javax.swing.table.DefaultTableModel;
 import lk.ijse.thogakade.controller.ControllerFactory;
 import lk.ijse.thogakade.controller.custom.ItemController;
 import lk.ijse.thogakade.dto.ItemDTO;
+import lk.ijse.thogakade.observers.Observer;
 
 /**
  *
  * @author Dilshan
  */
-public class ItemForm extends javax.swing.JFrame {
+public class ItemForm extends javax.swing.JFrame implements Observer{
 
     private ItemController ctrlItem;
 
@@ -489,5 +491,11 @@ public class ItemForm extends javax.swing.JFrame {
         txtPrice.setText("");
         txtQtyOnHand.setText("");
     }
+
+    @Override
+    public void update() throws RemoteException {
+        loadTable();
+    }
+    
 
 }

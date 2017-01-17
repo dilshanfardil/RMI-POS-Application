@@ -6,13 +6,13 @@
 
 package lk.ijse.thogakade.views;
 
+import java.rmi.RemoteException;
 import java.text.NumberFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.Observable;
-import java.util.Observer;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -25,6 +25,7 @@ import lk.ijse.thogakade.dto.CustomerDTO;
 import lk.ijse.thogakade.dto.ItemDTO;
 import lk.ijse.thogakade.dto.OrderDTO;
 import lk.ijse.thogakade.dto.OrderdetailDTO;
+import lk.ijse.thogakade.observers.Observer;
 
 /**
  *
@@ -639,9 +640,9 @@ public class PlaceOrderForm extends javax.swing.JFrame implements Observer{
         }
         return null;
     }
-
+    
     @Override
-    public void update(Observable o, Object arg) {
+    public void update() throws RemoteException {
         JOptionPane.showMessageDialog(this, "updated");
         loadCustomerCombo();
         loadItemCombo();
