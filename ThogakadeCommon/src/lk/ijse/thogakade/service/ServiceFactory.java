@@ -6,7 +6,6 @@
 package lk.ijse.thogakade.service;
 
 import java.rmi.Remote;
-import java.rmi.RemoteException;
 
 /**
  *
