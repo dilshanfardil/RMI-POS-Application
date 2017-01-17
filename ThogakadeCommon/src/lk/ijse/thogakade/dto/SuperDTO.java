@@ -11,6 +11,10 @@ import java.io.Serializable;
  *
  * @author student
  */
-public class SuperDTO implements Serializable {
+public class SuperDTO implements Serializable,Cloneable{
+    
+    public SuperDTO m() throws CloneNotSupportedException{
+        return (SuperDTO) super.clone();
+    }
     
 }
