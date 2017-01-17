@@ -35,16 +35,16 @@ public class OrderBOImpl implements OrderBO {
     }
 
     @Override
-    public boolean saveOrder(OrderDTO Odto, ArrayList<OrderdetailDTO> t) throws Exception {        
+    public boolean saveOrder(OrderDTO orderDTO, ArrayList<OrderdetailDTO> orderdetailDTOs) throws Exception {        
         orderDAO.setConnection(connection);
         orderdetailDAO.setConnection(connection);
 
         connection.setAutoCommit(false);
 
-        boolean resultOrder = orderDAO.save(Odto);
+        boolean resultOrder = orderDAO.save(orderDTO);
 
         if (resultOrder) {
-            for (OrderdetailDTO orderdetailDTO : t) {
+            for (OrderdetailDTO orderdetailDTO : orderdetailDTOs) {
                 boolean resultOrderDetail = orderdetailDAO.save(orderdetailDTO);
                 if (resultOrderDetail) {
                     connection.rollback();

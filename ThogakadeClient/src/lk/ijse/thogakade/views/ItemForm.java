@@ -5,6 +5,7 @@
  */
 package lk.ijse.thogakade.views;
 
+import java.rmi.RemoteException;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -13,12 +14,13 @@ import javax.swing.table.DefaultTableModel;
 import lk.ijse.thogakade.controller.ControllerFactory;
 import lk.ijse.thogakade.controller.custom.ItemController;
 import lk.ijse.thogakade.dto.ItemDTO;
+import lk.ijse.thogakade.observers.Observer;
 
 /**
  *
  * @author Dilshan
  */
-public class ItemForm extends javax.swing.JFrame {
+public class ItemForm extends javax.swing.JFrame implements Observer{
 
     private ItemController ctrlItem;
 
@@ -29,6 +31,7 @@ public class ItemForm extends javax.swing.JFrame {
         initComponents();
         try {
             ctrlItem = (ItemController) ControllerFactory.getInstance().getController(ControllerFactory.ControllerTypes.ITEM);
+            ctrlItem.registerObserver(this);
         } catch (Exception ex) {
             System.out.println(ex);
         }
@@ -331,7 +334,13 @@ public class ItemForm extends javax.swing.JFrame {
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        dispose();
+        try {
+            ctrlItem.unregisterObserver(this);
+            dispose();
+        } catch (RemoteException ex) {
+            Logger.getLogger(ItemForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -491,6 +500,11 @@ public class ItemForm extends javax.swing.JFrame {
         txtName.setText("");
         txtPrice.setText("");
         txtQtyOnHand.setText("");
+    }
+
+    @Override
+    public void update() throws RemoteException {
+        loadTable();
     }
 
 }
