@@ -318,6 +318,7 @@ public class ItemForm extends javax.swing.JFrame {
 
             boolean result = ctrlItem.save(item);
             if (result) {
+                notifyAll();
                 loadTable();
                 clear();
                 JOptionPane.showMessageDialog(this, "Item has been successfully added");
@@ -343,6 +344,7 @@ public class ItemForm extends javax.swing.JFrame {
 
             boolean result = ctrlItem.update(item);
             if (result) {
+                notifyAll();
                 loadTable();
                 clear();
                 JOptionPane.showMessageDialog(this, "Item has been successfully UPDATED");
@@ -365,6 +367,7 @@ public class ItemForm extends javax.swing.JFrame {
 
             boolean result = ctrlItem.delete(txtID.getText());
             if (result) {
+                notifyAll();
                 JOptionPane.showMessageDialog(this, "Item has been successfully deleted");
 
             } else {
