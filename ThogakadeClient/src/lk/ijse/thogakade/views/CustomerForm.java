@@ -18,7 +18,9 @@ import lk.ijse.thogakade.observers.Observer;
  *
  * @author Dilshan
  */
+
 public class CustomerForm extends javax.swing.JFrame implements Observer {
+
 
     private CustomerController ctrlCustomer;
 
@@ -329,6 +331,7 @@ public class CustomerForm extends javax.swing.JFrame implements Observer {
             boolean result = ctrlCustomer.save(customer);
             if (result) {
 //                loadTable();
+                notifyAll();
                 clearAll();
                 JOptionPane.showMessageDialog(this, "Customer has been successfully added");
 
@@ -350,8 +353,13 @@ public class CustomerForm extends javax.swing.JFrame implements Observer {
         try {
             boolean result = ctrlCustomer.update(customer);
             if (result) {
+
                 ctrlCustomer.release(txtID.getText());
                 //loadTable();
+
+//                loadTable();
+               
+
                 clearAll();
                 JOptionPane.showMessageDialog(this, "Customer has been Updated added");
 
@@ -395,8 +403,11 @@ public class CustomerForm extends javax.swing.JFrame implements Observer {
         try {
             boolean result = ctrlCustomer.delete(txtID.getText());
             if (result) {
+
                 ctrlCustomer.release(txtID.getText());
                 //loadTable();
+
+
                 clearAll();
                 JOptionPane.showMessageDialog(this, "Customer has been Deleted");
 
@@ -492,20 +503,20 @@ public class CustomerForm extends javax.swing.JFrame implements Observer {
     private javax.swing.JButton updateCustomer;
     // End of variables declaration//GEN-END:variables
 
-//    public void loadTable() {
-//        try {
-//            ArrayList<CustomerDTO> alcust = ctrlCustomer.get();
-//            DefaultTableModel dtm = (DefaultTableModel) tblCustomer.getModel();
-//            dtm.setRowCount(0);
-//            for (CustomerDTO customer : alcust) {
-//                Object[] rowData = {customer.getId(), customer.getName(), customer.getAddress(), customer.getSalary()};
-//                dtm.addRow(rowData);
-//            }
-//
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-//    }
+   public void loadTable() {
+       try {
+           ArrayList<CustomerDTO> alcust = ctrlCustomer.get();
+           DefaultTableModel dtm = (DefaultTableModel) tblCustomer.getModel();
+           dtm.setRowCount(0);
+           for (CustomerDTO customer : alcust) {
+               Object[] rowData = {customer.getId(), customer.getName(), customer.getAddress(), customer.getSalary()};
+               dtm.addRow(rowData);
+           }
+
+       } catch (Exception ex) {
+           ex.printStackTrace();
+       }
+   }
     public void clearAll() {
         txtAddress.setText("");
         txtID.setText("");
@@ -517,5 +528,6 @@ public class CustomerForm extends javax.swing.JFrame implements Observer {
     public void update() throws RemoteException {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
 
 }
