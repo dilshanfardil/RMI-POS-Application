@@ -16,8 +16,5 @@ public interface Observer extends Remote {
     
     public void update()throws RemoteException;
     
-    default void x(){
-        
-    }
     
 }

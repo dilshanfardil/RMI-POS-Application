@@ -76,13 +76,13 @@ public interface SuperDAO<T extends SuperDTO> {
         while (rstColoumnHedding.next()) {
             sqlStm += (rstColoumnHedding.getString(1) + " = ?,");
         }
-        
-        sqlStm = sqlStm.substring(0, sqlStm.length()-1);
+
+        sqlStm = sqlStm.substring(0, sqlStm.length() - 1);
         sqlStm += " WHERE " + primaryField + " = ?";
-        
+
         System.out.println(sqlStm);
-        PreparedStatement pst =connection.prepareStatement(sqlStm);
-        
+        PreparedStatement pst = connection.prepareStatement(sqlStm);
+
         int i = declaredFields.length;
 
         for (Field declaredField : declaredFields) {
@@ -114,7 +114,7 @@ public interface SuperDAO<T extends SuperDTO> {
         Connection connection = this.getConnection();
 
         System.out.println(tableName);
-        
+
         Field[] declaredFields = aClass.getDeclaredFields();
         Statement statement = connection.createStatement();
         ResultSet rstColoumnHedding = statement.executeQuery("desc " + tableName + " ;");
@@ -122,15 +122,13 @@ public interface SuperDAO<T extends SuperDTO> {
         rstColoumnHedding.next();
         String primaryField = rstColoumnHedding.getString(1);
 
-        
         System.out.println(primaryField);
-        
-        String sqlStm = "DELETE FROM " + tableName + " WHERE " + primaryField + " = " + id;
+
+        String sqlStm = "DELETE FROM " + tableName + " WHERE " + primaryField + " = '" + id + "' ";
         PreparedStatement pst = connection.prepareStatement(sqlStm);
 
-        int i = 1;
+        System.out.println(pst.toString());
         int result = pst.executeUpdate();
-        connection.close();
         return (result < 1);
         //</editor-fold>
     }
@@ -146,25 +144,36 @@ public interface SuperDAO<T extends SuperDTO> {
 
         Connection connection = this.getConnection();
 
-        Field[] declaredFields = aClass.getDeclaredFields();
+        T dto = (T) new SuperDTO();
+        Class<? extends SuperDTO> aClassDTO = dto.getClass();
+        Field[] declaredFields = aClassDTO.getDeclaredFields();
+
         Statement statement = connection.createStatement();
         ResultSet rstColoumnHedding = statement.executeQuery("desc " + tableName + " ;");
 
         rstColoumnHedding.next();
         String primaryField = rstColoumnHedding.getString(1);
 
-        String sqlStm = "SELECT * FROM " + tableName + " WHERE " + primaryField + " = " + id;
+        String sqlStm = "SELECT * FROM " + tableName + " WHERE " + primaryField + " = '" + id + "' ";
+
+        System.out.println(sqlStm);
+
         PreparedStatement pst = connection.prepareStatement(sqlStm);
         ResultSet rst = pst.executeQuery(sqlStm);
         rst.next();
 
         int i = 1;
-        T dto = (T) new SuperDTO();
-        for (Field declaredField : declaredFields) {
+        try {
+            for (Field declaredField : declaredFields) {
             declaredField.setAccessible(true);
+            System.out.println(declaredField.toString());
             declaredField.set(dto, rst.getObject(i));
             i++;
         }
+        } catch (Exception e) {
+            System.out.println("ss");
+        }
+        
         return dto;
         //</editor-fold>
     }
@@ -205,11 +214,6 @@ public interface SuperDAO<T extends SuperDTO> {
     public Connection getConnection() throws Exception;
 
 }
-
-
-
-
-
 
 //    public boolean save(T dto) throws Exception;
 //    public boolean update(T dto) throws Exception;
