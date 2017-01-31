@@ -16,8 +16,9 @@ import lk.ijse.thogakade.controller.custom.impl.PlaceOrderControllerImpl;
  */
 public class ControllerFactory {
 
+
     public enum ControllerTypes {
-        CUSTOMER, PLACE_ORDER, ITEM; 
+        CUSTOMER, PLACE_ORDER, ITEM , qwerty; 
     }
 
     private static ControllerFactory controllerFactory;
