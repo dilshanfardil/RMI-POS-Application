@@ -31,6 +31,7 @@ public class ItemForm extends javax.swing.JFrame implements Observer{
         initComponents();
         try {
             ctrlItem = (ItemController) ControllerFactory.getInstance().getController(ControllerFactory.ControllerTypes.ITEM);
+            ctrlItem.registerObserver(this);
         } catch (Exception ex) {
             System.out.println(ex);
         }
@@ -334,7 +335,13 @@ public class ItemForm extends javax.swing.JFrame implements Observer{
     }//GEN-LAST:event_btnAddActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        dispose();
+        try {
+            ctrlItem.unregisterObserver(this);
+            dispose();
+        } catch (RemoteException ex) {
+            Logger.getLogger(ItemForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
@@ -346,7 +353,9 @@ public class ItemForm extends javax.swing.JFrame implements Observer{
 
             boolean result = ctrlItem.update(item);
             if (result) {
-                notifyAll();
+
+                ctrlItem.release(txtID.getText());
+
                 loadTable();
                 clear();
                 JOptionPane.showMessageDialog(this, "Item has been successfully UPDATED");
@@ -361,7 +370,7 @@ public class ItemForm extends javax.swing.JFrame implements Observer{
 
     private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
 
-        try {
+       try {
             ItemDTO item = new ItemDTO(txtID.getText(),
                     txtName.getText(),
                     Double.parseDouble(txtPrice.getText()),
@@ -369,7 +378,9 @@ public class ItemForm extends javax.swing.JFrame implements Observer{
 
             boolean result = ctrlItem.delete(txtID.getText());
             if (result) {
-                notifyAll();
+
+                ctrlItem.release(txtID.getText());
+
                 JOptionPane.showMessageDialog(this, "Item has been successfully deleted");
 
             } else {
@@ -386,10 +397,14 @@ public class ItemForm extends javax.swing.JFrame implements Observer{
         if (evt.getClickCount() == 2) {
             try {
                 ItemDTO resDTO = ctrlItem.getbyId(tblItem.getValueAt(tblItem.getSelectedRow(), 0).toString());
-                txtID.setText(resDTO.getCode());
-                txtName.setText(resDTO.getDescription());
-                txtPrice.setText(resDTO.getUnitPrice() + "");
-                txtQtyOnHand.setText(resDTO.getQtyOnHand() + "");
+                if(ctrlItem.reserve(resDTO.getCode())){
+                    txtID.setText(resDTO.getCode());
+                    txtName.setText(resDTO.getDescription());
+                    txtPrice.setText(resDTO.getUnitPrice() + "");
+                    txtQtyOnHand.setText(resDTO.getQtyOnHand() + "");
+                }else{
+                    JOptionPane.showMessageDialog(this, "Please wait..");
+                }    
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -496,6 +511,6 @@ public class ItemForm extends javax.swing.JFrame implements Observer{
     public void update() throws RemoteException {
         loadTable();
     }
-    
+
 
 }

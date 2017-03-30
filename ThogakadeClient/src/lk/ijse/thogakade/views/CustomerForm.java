@@ -5,18 +5,22 @@
  */
 package lk.ijse.thogakade.views;
 
+import java.rmi.RemoteException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import lk.ijse.thogakade.controller.ControllerFactory;
 import lk.ijse.thogakade.controller.custom.CustomerController;
 import lk.ijse.thogakade.dto.CustomerDTO;
+import lk.ijse.thogakade.observers.Observer;
 
 /**
  *
  * @author Dilshan
  */
-public class CustomerForm extends javax.swing.JFrame {
+
+public class CustomerForm extends javax.swing.JFrame implements Observer {
+
 
     private CustomerController ctrlCustomer;
 
@@ -28,6 +32,7 @@ public class CustomerForm extends javax.swing.JFrame {
 
         try {
             ctrlCustomer = (CustomerController) ControllerFactory.getInstance().getController(ControllerFactory.ControllerTypes.CUSTOMER);
+            ctrlCustomer.registerObserver(this);
         } catch (Exception ex) {
             Logger.getLogger(CustomerForm.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -348,8 +353,13 @@ public class CustomerForm extends javax.swing.JFrame {
         try {
             boolean result = ctrlCustomer.update(customer);
             if (result) {
+
+                ctrlCustomer.release(txtID.getText());
+                //loadTable();
+
 //                loadTable();
-                notifyAll();
+               
+
                 clearAll();
                 JOptionPane.showMessageDialog(this, "Customer has been Updated added");
 
@@ -362,17 +372,26 @@ public class CustomerForm extends javax.swing.JFrame {
     }//GEN-LAST:event_updateCustomerActionPerformed
 
     private void btnExitActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExitActionPerformed
-        dispose();
+        try {
+            ctrlCustomer.unregisterObserver(this);
+            dispose();
+        } catch (RemoteException ex) {
+            Logger.getLogger(ItemForm.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnExitActionPerformed
 
     private void tblCustomerMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblCustomerMouseClicked
         if (evt.getClickCount() == 2) {
             try {
                 CustomerDTO resDTO = ctrlCustomer.getbyId(tblCustomer.getValueAt(tblCustomer.getSelectedRow(), 0).toString());
-                txtID.setText(resDTO.getId());
-                txtName.setText(resDTO.getName());
-                txtAddress.setText(resDTO.getAddress());
-                txtSalary.setText(resDTO.getSalary() + "");
+                if (ctrlCustomer.reserve(resDTO.getId())) {
+                    txtID.setText(resDTO.getId());
+                    txtName.setText(resDTO.getName());
+                    txtAddress.setText(resDTO.getAddress());
+                    txtSalary.setText(resDTO.getSalary() + "");
+                } else {
+                    JOptionPane.showMessageDialog(this, "Please wait..");
+                }
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
@@ -384,8 +403,11 @@ public class CustomerForm extends javax.swing.JFrame {
         try {
             boolean result = ctrlCustomer.delete(txtID.getText());
             if (result) {
-//                loadTable();
-                notifyAll();
+
+                ctrlCustomer.release(txtID.getText());
+                //loadTable();
+
+
                 clearAll();
                 JOptionPane.showMessageDialog(this, "Customer has been Deleted");
 
@@ -481,25 +503,31 @@ public class CustomerForm extends javax.swing.JFrame {
     private javax.swing.JButton updateCustomer;
     // End of variables declaration//GEN-END:variables
 
-//    public void loadTable() {
-//        try {
-//            ArrayList<CustomerDTO> alcust = ctrlCustomer.get();
-//            DefaultTableModel dtm = (DefaultTableModel) tblCustomer.getModel();
-//            dtm.setRowCount(0);
-//            for (CustomerDTO customer : alcust) {
-//                Object[] rowData = {customer.getId(), customer.getName(), customer.getAddress(), customer.getSalary()};
-//                dtm.addRow(rowData);
-//            }
-//
-//        } catch (Exception ex) {
-//            ex.printStackTrace();
-//        }
-//    }
+   public void loadTable() {
+       try {
+           ArrayList<CustomerDTO> alcust = ctrlCustomer.get();
+           DefaultTableModel dtm = (DefaultTableModel) tblCustomer.getModel();
+           dtm.setRowCount(0);
+           for (CustomerDTO customer : alcust) {
+               Object[] rowData = {customer.getId(), customer.getName(), customer.getAddress(), customer.getSalary()};
+               dtm.addRow(rowData);
+           }
+
+       } catch (Exception ex) {
+           ex.printStackTrace();
+       }
+   }
     public void clearAll() {
         txtAddress.setText("");
         txtID.setText("");
         txtName.setText("");
         txtSalary.setText("");
     }
+
+    @Override
+    public void update() throws RemoteException {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
 
 }

@@ -33,7 +33,7 @@ public class ConnectionFactory {
         } catch (ClassNotFoundException ex) {
             ex.printStackTrace();
         }
-        return DriverManager.getConnection("jdbc:mysql://localhost:3306/companyf" , "root" , "1234");        
+        return DriverManager.getConnection("jdbc:mysql://localhost:3306/company" , "root" , "MySQL");        
     }
     
 }

@@ -7,12 +7,14 @@ package lk.ijse.thogakade.controller;
 
 import java.rmi.Remote;
 import java.util.ArrayList;
+import lk.ijse.thogakade.dto.SuperDTO;
+import lk.ijse.thogakade.observers.Subject;
 
 /**
  *
  * @author student
  */
-public interface SuperController<T> extends Remote{
+public interface SuperController<T extends SuperDTO> extends Remote,Subject{
 
     public boolean save(T t) throws Exception;
 
@@ -24,4 +26,8 @@ public interface SuperController<T> extends Remote{
 
     public ArrayList<T> get() throws Exception;
 
+    public boolean reserve(String id) throws Exception;
+    
+    public boolean release(String id) throws Exception;
+    
 }
