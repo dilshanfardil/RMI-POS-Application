@@ -657,12 +657,6 @@ public class PlaceOrderForm extends javax.swing.JFrame implements Observer
         }
         return null;
     }
-
-    
-
-    @Override
-    public void update() throws RemoteException {
-        //JOptionPane.showMessageDialog(this, "updated");
         loadCustomerCombo();
         loadItemCombo();
     }

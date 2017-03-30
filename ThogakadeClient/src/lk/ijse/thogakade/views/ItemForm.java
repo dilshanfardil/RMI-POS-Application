@@ -512,4 +512,5 @@ public class ItemForm extends javax.swing.JFrame implements Observer{
         loadTable();
     }
 
+
 }
